@@ -1,5 +1,5 @@
-import {appStore} from "@/stores/app.store";
 import Link from 'next/link'
+import {appStore} from "@/stores";
 
 export default function Home() {
     return (

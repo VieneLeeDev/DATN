@@ -15,4 +15,4 @@ const AppStore = types
         return {}
     });
 
-export const appStore = AppStore.create({room: {items: [{id: '1'}, {id: '2'}, {id: '3'}]}})
+export const appStore = AppStore.create({room: {items: [{id: '1'}, {id: '2'}, {id: '3'}, {id: '4'}]}})

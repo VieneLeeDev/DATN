@@ -38,6 +38,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # Leansoft Instruction
 ## Deploy next-14
+Login `firebase login`
 Run `cd next-14; npm run deploy` and view out in https://fir-q4-2023.web.app
 
 ## Learning
