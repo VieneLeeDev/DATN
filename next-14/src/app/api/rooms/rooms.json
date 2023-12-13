@@ -1,0 +1,146 @@
+[{
+    "id":"room_01",
+    "hotel_id":"ht_1",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Sa-Riera-Sea-View-9.jpg",
+    "price":90,
+    "size":"30m²",
+    "guest":4,
+    "available":true
+},
+{
+    "id":"room_02",
+    "hotel_id":"ht_1",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Seaside-Villa-Tuscany-Maremma-7.jpg",
+    "price":902,
+    "size":"250m²",
+    "guest":6,
+    "available":true
+},
+{
+    "id":"room_03",
+    "hotel_id":"ht_2",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Pasadena-5.jpg",
+    "price":780,
+    "size":"350m²",
+    "guest":8,
+    "available":true
+},
+{
+    "id":"room_04",
+    "hotel_id":"ht_2",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/about-4.jpg",
+    "price":520,
+    "size":"225m²",
+    "guest":6,
+    "available":true
+},
+{
+    "id":"room_05",
+    "hotel_id":"ht_3",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Alps-Mountains-Winter-Cottage-Monte-Bianco-in-Aosta-Valley-7.jpg",
+    "price":400,
+    "size":"275m²",
+    "guest":1,
+    "available":true
+},
+{
+    "id":"room_06",
+    "hotel_id":"ht_3",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/italy-2-3.jpg",
+    "price":450,
+    "size":"300m²",
+    "guest":2,
+    "available":true
+},
+{
+    "id":"room_07",
+    "hotel_id":"ht_4",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Bastilicata-Grande-5.jpg",
+    "price":500,
+    "size":"345m²",
+    "guest":6,
+    "available":true
+},
+{
+    "id":"room_08",
+    "hotel_id":"ht_4",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Bastilicata-Grande-2.jpg",
+    "price":730,
+    "size":"300m²",
+    "guest":2,
+    "available":true
+},
+{
+    "id":"room_09",
+    "hotel_id":"ht_5",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Summer-Villa-Emilia-2.jpg",
+    "price":1100,
+    "size":"345m²",
+    "guest":5,
+    "available":true
+},
+{
+    "id":"room_10",
+    "hotel_id":"ht_3",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Summer-Villa-Emilia.jpg",
+    "price":630,
+    "size":"300m²",
+    "guest":4,
+    "available":true
+},
+{
+    "id":"room_11",
+    "hotel_id":"ht_5",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Bastilicata-Grande-5.jpg",
+    "price":500,
+    "size":"345m²",
+    "guest":6,
+    "available":true
+},
+{
+    "id":"room_12",
+    "hotel_id":"ht_5",
+    "image_url":"https://themes.getmotopress.com/booklium-default/wp-content/uploads/sites/29/2019/08/Villa-Bastilicata-Grande-4.jpg",
+    "price":730,
+    "size":"300m²",
+    "guest":6,
+    "available":true
+},
+{
+    "id":"room_13",
+    "hotel_id":"ht_1",
+    "image_url":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/6e/68/bf/vs-hotel.jpg?w=1200&h=-1&s=1",
+    "price":500,
+    "size":"250m²",
+    "guest":2,
+    "available":true
+},
+{
+    "id":"room_14",
+    "hotel_id":"ht_2",
+    "image_url":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/d7/11/85/lobby-lounge.jpg?w=1200&h=-1&s=1",
+    "price":150,
+    "size":"250m²",
+    "guest":1,
+    "available":true
+}
+,
+{
+    "id":"room_15",
+    "hotel_id":"ht_3",
+    "image_url":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/22/d7/0f/2e/lobby-lounge.jpg?w=1200&h=-1&s=1",
+    "price":150,
+    "size":"250m²",
+    "guest":3,
+    "available":true
+},
+{
+    "id":"room_16",
+    "hotel_id":"ht_1",
+    "image_url":"https://a25hotel.com/files/files/screenshot_1664619805.png",
+    "price":150,
+    "size":"250m²",
+    "guest":9,
+    "available":true
+}
+]

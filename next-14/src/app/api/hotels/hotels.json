@@ -1,0 +1,54 @@
+[{
+    "id":"ht_1",
+    "name":"Anava",
+    "description":"Located near the sea, Villa Pasadena offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Da Nang",
+    "email":"Anava@gmail.com",
+    "tel":"0822640414",
+    "city":"Da Nang"
+},{
+    "id":"ht_2",
+    "name":"Villa Pasadena",
+    "description":"Located near the sea, Villa Pasadena offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Ha Noi",
+    "email":"Pasadena@gmail.com",
+    "tel":"0899971",
+    "city":"Ha Noi"
+},
+{
+    "id":"ht_3",
+    "name":"Villa Bastilicata Grande",
+    "description":"Located near the sea, Villa Bastilicata Grande offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Ho Chi Minh",
+    "email":"Grande@gmail.com",
+    "tel":"0899971",
+    "city":"Ho Chi Minh"
+},
+{
+    "id":"ht_4",
+    "name":"Seaside Villa Tuscany Maremma",
+    "description":"Located near the sea, Seaside Villa Tuscany Maremma offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Gia Lai",
+    "email":"Maremma@gmail.com",
+    "tel":"0899971",
+    "city":"Gia Lai"
+},
+{
+    "id":"ht_5",
+    "name":"Mountains Villa Monte",
+    "description":"Located Mountains Villa Monte offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Gia Lai",
+    "email":"Monte@gmail.com",
+    "tel":"08999ad71",
+    "city":"Hue"
+},
+{
+    "id":"ht_6",
+    "name":"levien",
+    "description":"Located Mountains Villa Monte offers pet-friendly accommodations with lots of outdoor and indoor facilities. The villa is equipped with air conditioning and free WiFi. Free private parking is available on site, so you should not have any problems with it.The kitchen is fitted with a dishwasher, refrigerator and an oven. A flat-screen TV is available in several rooms. You’ll also enjoy a sun terrace and many other things.",
+    "address":"105 Cam Le, Gia Lai",
+    "email":"Monte@gmail.com",
+    "tel":"08999ad71",
+    "city":"Hue"
+}
+]
