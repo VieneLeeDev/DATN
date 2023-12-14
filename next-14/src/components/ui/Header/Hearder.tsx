@@ -16,7 +16,7 @@ export const Header = () => {
       <div className="flex flex-col shadow-lg border-[1px] max-w-screen h-[70px] justify-center px-5 ">
         <div className="hidden md:flex md:flex-1 justify-center items-center h-full ">
           {/**navigation desktop*/}
-          <Link href={"/home"} className={`text-xl text-black flex justify-center items-center h-2/3 w-[150px] hover:opacity-50 ${pathname === "/home"? "text-blue-600 border-b-[2px] border-solid border-blue-500 duration-100": ""} `}>
+          <Link href={"/"} className={`text-xl text-black flex justify-center items-center h-2/3 w-[150px] hover:opacity-50 ${pathname === "/"? "text-blue-600 border-b-[2px] border-solid border-blue-500 duration-100": ""} `}>
             Home
           </Link>
         </div>
