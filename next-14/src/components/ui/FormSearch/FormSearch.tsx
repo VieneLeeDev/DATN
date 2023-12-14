@@ -1,15 +1,10 @@
 "use client";
-import { Hotel } from "@/app/constants/hotels";
-import { Room } from "@/app/constants/rooms";
 import { useEffect, useState } from "react";
 import "react-datetime/css/react-datetime.css";
-import hotels from "../../../api/hotels/hotels.json"
-import rooms from "../../../api/rooms/rooms.json"
 import { DatePicker } from "antd";
 import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs'; 
 import type { RangePickerProps } from 'antd/es/date-picker';
-import { roomStore } from "@/app/stores/room/RoomStore";
 import { toJS } from "mobx";
 import { observer } from "mobx-react-lite";
 interface FormSearchProps {

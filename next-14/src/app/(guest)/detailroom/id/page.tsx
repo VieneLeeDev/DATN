@@ -103,7 +103,10 @@ const DetailRoom = ({ params }: { params: { id: string } }) => {
       </div>
       <hr className="container my-10" />
       <div className="container relative h-[400px] bg-slate-100 flex justify-center items-center">
-        <Image fill className="object-cover object-center" alt="pic" src={detailRoom ? `${detailRoom?.image_url}` :"https://fl-1.cdn.flockler.com/embed/no-image.svg"} />
+        <img
+        // fill 
+        className="object-cover object-center" 
+        alt="pic" src={detailRoom ? `${detailRoom?.image_url}` :"https://fl-1.cdn.flockler.com/embed/no-image.svg"}/>
       </div>
       <hr className="container my-10" />
       <div className="container flex flex-col md:flex-row ">

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build; firebase use s-q4-2023; firebase deploy $1"
+    "deploy": "next build; firebase use vien-q4-2023; firebase deploy $1"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",

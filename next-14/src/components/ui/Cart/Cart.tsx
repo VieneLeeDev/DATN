@@ -8,10 +8,10 @@ interface CartProps {
 }
 const Cart = (props: CartProps) => {
   return (
-    <div className="container border-[1px] overflow-hidden hover:opacity-80 hover:cursor-pointer duration-100">
+    <div className="container border-[1px] overflow-hidden hover:opacity-80 hover:cursor-pointer duration-100 h-full">
       <div className="flex relative bg-center bg-cover bg-[url('https://fl-1.cdn.flockler.com/embed/no-image.svg')] overflow-hidden aspect-square">
-        <Image
-          fill
+        <img
+          // fill
           className="object-cover"
           src={`${props.img}`}
           alt="pic"

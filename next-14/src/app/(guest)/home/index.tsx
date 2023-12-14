@@ -40,7 +40,7 @@ const Home = observer(() => {
               </p>
             </div>
           </div>
-          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-items-center items-stretch">
+          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-items-center">
             {/* {loading ? <Loading /> : null} */}
              {roomStore.roomsAvailable.map((product: any) => (
               <Link 
