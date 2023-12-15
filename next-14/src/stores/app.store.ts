@@ -1,4 +1,4 @@
-import {onSnapshot, types} from "mobx-state-tree";
+import {applySnapshot, onSnapshot, types} from "mobx-state-tree";
 import {RoomStore} from "@/stores/room.store";
 import {HotelStore} from "@/stores/hotel.store";
 import {BookingStore} from "@/stores/booking.store";
@@ -23,6 +23,11 @@ const AppStore = types
         return {
             afterCreate() {
                 console.log('appStore', toJS((self)));
+                if (typeof window !== 'undefined') {
+                    const json = JSON.parse(localStorage.getItem('bookingApp') || '');
+                    if (json)
+                        applySnapshot(self, json);
+                }
             },
             setDuration(from: string, to: string) {
                 self.filter_from = from;
@@ -38,4 +43,5 @@ export const appStore = AppStore.create(dataApp);
 
 onSnapshot(appStore, (snapshot) => {
     console.log('appStore', snapshot);
+    localStorage.setItem('bookingApp', JSON.stringify(snapshot));
 })

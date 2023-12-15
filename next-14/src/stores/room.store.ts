@@ -25,7 +25,7 @@ const Room = types
 export const RoomStore = types
     .model('RoomStore', {
         items: types.array(Room),
-        itemSelected: types.safeReference(Room),
+        itemSelected_id: '',
     })
     .views(
         (self: any) => {
@@ -43,13 +43,16 @@ export const RoomStore = types
                     const _guests: readonly number[] = self.itemsSorted.map((item: any) => item.guest);
                     return _.map(_.groupBy(_guests), (value, key) => key);
                 },
+                get itemSelected() {
+                    return values(self.items).find((room: any) => room.id === self.itemSelected_id);
+                },
             }
         }
     )
     .actions((self: any) => {
         return {
             pickItem(item: any) {
-                self.itemSelected = item;
+                self.itemSelected_id = item.id;
             },
         }
     });

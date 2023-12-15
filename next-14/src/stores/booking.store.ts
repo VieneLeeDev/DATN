@@ -1,5 +1,6 @@
-import {types} from "mobx-state-tree";
+import {destroy, getParent, getRoot, types} from "mobx-state-tree";
 import {values} from "mobx";
+import {v4 as uuidv4} from "uuid";
 
 const Booking = types
     .model('Booking', {
@@ -8,6 +9,24 @@ const Booking = types
         from: '',
         to: '',
         total_price: 0,
+    })
+    .views(
+        (self: any) => {
+            const root: any = getRoot(self);
+            return {
+                get room() {
+                    return values(root.room.items).find((room: any) => room.id === self.room_id);
+                },
+            }
+        }
+    )
+    .actions((self: any) => {
+        const parent: any = getParent(self, 2);
+        return {
+            delete() {
+                parent.delete(self);
+            },
+        }
     });
 
 export const BookingStore = types
@@ -25,15 +44,12 @@ export const BookingStore = types
     )
     .actions((self: any) => {
         return {
-            order(user: any) {
+            create(item: { room_id: string, from: string, to: string, total_price: number }) {
+                const id = uuidv4();
+                self.items.push({id, ...item});
             },
-            addBooking(booking: any){
-                self.items.push(booking)
-                localStorage.setItem('booking',JSON.stringify(self.items))
+            delete(item: any) {
+                destroy(item);
             },
-            removeBooking(id:string){
-                self.items = self.items?.filter((item: any) => item.id !== id)
-                
-            }
         }
     });

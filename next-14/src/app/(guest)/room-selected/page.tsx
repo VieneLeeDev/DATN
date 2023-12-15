@@ -7,8 +7,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/navigation";
 import { observer } from "mobx-react";
 import { appStore } from "@/stores";
-import { v4 as uuidv4 } from "uuid";
-import { toJS } from "mobx";
 dayjs.extend(customParseFormat);
 
 const DetailRoom = observer(({ params }: { params: { id: string } }) => {
@@ -90,15 +88,13 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
     dataInSearch.checkOut === "" ? dayjs() : dayjs(`${dataInSearch.checkOut}`);
 
   const handleOrder = () => {
-    const idBooking = uuidv4();
     const dataBooking = {
-      id: idBooking,
       room_id: roomSelected?.id,
       from: dataInBill.checkIn,
       to: dataInBill.checkOut,
       total_price: roomSelected?.price * count,
     };
-    appStore.booking.addBooking(dataBooking);
+    appStore.booking.create(dataBooking);
     router.push("/received")
   };
 
