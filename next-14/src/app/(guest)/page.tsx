@@ -1,6 +1,6 @@
 "use client";
 import {observer} from 'mobx-react-lite';
-import FormSearch from "@/components/ui/FormSearch/FormSearch";
+import FormSearch from "@/components/FormSearch";
 import Link from "next/link";
 import Card from "@/components/Card";
 import {appStore} from "@/stores";
@@ -21,9 +21,6 @@ const HomePage = observer(() => {
                     dataHotel={[]}
                     startSearchCity={[]}
                 />
-                <select value={appStore.filter_guests} onChange={(e) => appStore.setGuests(Number(e.target.value))}>
-                    {appStore.room.guestList.map((value: any) => <option key={value} value={value}>{value}</option>)}
-                </select>
             </div>
             <div className="container mx-auto px-5 md:px-0">
                 {/**products */}

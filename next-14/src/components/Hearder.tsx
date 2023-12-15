@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import MenuHeader from "../MobileHeader/MobileHeader";
+import MenuHeader from "./MobileHeader";
 import { FiAlignJustify } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 export const Header = () => {

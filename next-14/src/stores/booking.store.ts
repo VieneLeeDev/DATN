@@ -27,5 +27,13 @@ export const BookingStore = types
         return {
             order(user: any) {
             },
+            addBooking(booking: any){
+                self.items.push(booking)
+                localStorage.setItem('booking',JSON.stringify(self.items))
+            },
+            removeBooking(id:string){
+                self.items = self.items?.filter((item: any) => item.id !== id)
+                
+            }
         }
     });
