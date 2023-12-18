@@ -9,7 +9,7 @@ const Hotel = types
         address: '',
         email: '',
         tel: '',
-        city: '',
+        city: ''
     });
 
 export const HotelStore = types

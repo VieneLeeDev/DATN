@@ -18,13 +18,9 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   });
 
   const router = useRouter();
-  // const detailRoom = rooms.find((room) => room.id === params.id)
-  // const detailHotel = hotels.find((hotel) => hotel.id === detailRoom?.hotel_id)
 
   const searchParams = useSearchParams();
-  // const dateCheckIn = searchParams.get('dateCheckIn')
-  // const dateCheckOut = searchParams.get('dateCheckOut')
-
+ 
   const dataInSearch = {
     checkIn: appStore.filter_from,
     checkOut: appStore.filter_to,
@@ -95,6 +91,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
       total_price: roomSelected?.price * count,
     };
     appStore.booking.create(dataBooking);
+    appStore.resetFilter()
     router.push("/received")
   };
 

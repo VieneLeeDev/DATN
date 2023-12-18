@@ -8,7 +8,7 @@ const Booking = types
         room_id: '',
         from: '',
         to: '',
-        total_price: 0,
+        total_price: 0
     })
     .views(
         (self: any) => {
