@@ -5,6 +5,7 @@ const nextConfig = {
     trailingSlash: true, // Optional: Change links `/me` -> `/me/` and emit `/me.html` -> `/me/index.html`
     // skipTrailingSlashRedirect: true, // Optional: Prevent automatic `/me` -> `/me/`, instead preserve `href`
     // distDir: 'dist', // Optional: Change the output directory `out` -> `dist`
+    images: { unoptimized: true }
 }
 
 module.exports = nextConfig

@@ -1,18 +1,21 @@
+import Image from "next/image";
+
 interface CartProps {
   name: string;
   price: number;
   description?: string;
   city: string;
-  img?: string;
+  img: string;
 }
 
 const Card = (props: CartProps) => {
   return (
     <div className="container border-[1px] overflow-hidden hover:opacity-80 hover:cursor-pointer duration-100 h-full">
       <div className="flex relative overflow-hidden aspect-square">
-        <img
+        <Image
+          fill
           className="object-cover"
-          src={`${props.img}`}
+          src={props.img}
           alt="pic"
           sizes="w-full h-full"
         />

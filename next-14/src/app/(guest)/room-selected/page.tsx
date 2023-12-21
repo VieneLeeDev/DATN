@@ -1,12 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { DatePicker } from "antd";
+import { DatePicker, notification } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/navigation";
 import { observer } from "mobx-react";
 import { appStore } from "@/stores";
+import Image from "next/image";
+import { supabase } from "@/utils/supabaseClient";
+import { v4 as uuidv4 } from "uuid";
 dayjs.extend(customParseFormat);
 
 const DetailRoom = observer(({ params }: { params: { id: string } }) => {
@@ -20,10 +23,10 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
- 
+
   const dataInSearch = {
-    checkIn: appStore.filter_from,
-    checkOut: appStore.filter_to,
+    checkIn: appStore.filter.filter_from,
+    checkOut: appStore.filter.filter_to,
   };
 
   useEffect(() => {
@@ -39,7 +42,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
         });
     handleCountDays(dataInSearch.checkIn, dataInSearch.checkOut);
   }, []);
-  
+
   useEffect(() => {
     if (dataInBill.checkIn !== "" && dataInBill.checkOut !== "") {
       handleCountDays(dataInBill.checkIn, dataInBill.checkOut);
@@ -58,7 +61,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   };
 
   const onChangeDateCheckIn = (e: any) => {
-    setDataInBill({ ...dataInBill, checkIn: e });
+    setDataInBill({ checkOut: `${dayjs(`${e}`).add(1, "day")}`, checkIn: e });
     setReload(!reload);
   };
   const onChangeDateCheckOut = (e: any) => {
@@ -71,10 +74,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   };
 
   const ValidateCheckOut = (value: any) => {
-    return (
-      dayjs(value).isBefore(dayjs()) ||
-      dayjs(value).isBefore(`${dataInBill.checkIn}`)
-    );
+    return dayjs(value).isBefore(dayjs(`${dataInBill.checkIn}`));
   };
 
   // set default value for datePicker in detail products
@@ -83,16 +83,39 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   const defaultValueCheckOut =
     dataInSearch.checkOut === "" ? dayjs() : dayjs(`${dataInSearch.checkOut}`);
 
-  const handleOrder = () => {
+  const handleOrder = async () => {
+    // const dataBooking = {
+    //   room_id: roomSelected?.id,
+    //   from: dataInBill.checkIn,
+    //   to: dataInBill.checkOut,
+    //   total_price: roomSelected?.price * count,
+    // };
+    const id = uuidv4();
     const dataBooking = {
-      room_id: roomSelected?.id,
-      from: dataInBill.checkIn,
-      to: dataInBill.checkOut,
-      total_price: roomSelected?.price * count,
+      room_id: "room_1",
+      from: "10-11-2023",
+      to: "10-11-2023",
+      total_price: 1000,
     };
-    appStore.booking.create(dataBooking);
-    appStore.resetFilter()
-    router.push("/received")
+    // get user id by supabase func
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    const user_id = user?.id;
+    const { data, error } = await supabase
+      .from("bookings")
+      .insert([
+        {
+          id: id,
+          ...dataBooking,
+          user_id,
+        },
+      ])
+      .select();
+      notification.success({message:"Tạo mới thành công!"})
+    // appStore.booking.create(dataBooking);
+    // appStore.resetFilter();
+    // router.push("/received");
   };
 
   const roomSelected: any = appStore.room.itemSelected || {};
@@ -110,15 +133,11 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
       </div>
       <hr className="container my-10" />
       <div className="container relative h-[400px] bg-slate-100 flex justify-center items-center">
-        <img
-          // fill
+        <Image
+          fill
           className="object-cover object-center w-full h-full"
           alt="pic"
-          src={
-            roomSelected
-              ? `${roomSelected?.image_url}`
-              : "https://fl-1.cdn.flockler.com/embed/no-image.svg"
-          }
+          src={roomSelected ? roomSelected?.image_url : ""}
         />
       </div>
       <hr className="container my-10" />
@@ -166,7 +185,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
                     disabledDate={ValidateCheckIn}
                     defaultValue={defaultValueCheckin}
                     size="large"
-                    format="MM-DD-YYYY"
+                    format="YYYY-MM-DD"
                     onChange={(obj, value) => onChangeDateCheckIn(value)}
                   />
                 }
@@ -178,7 +197,7 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
                     disabledDate={ValidateCheckOut}
                     defaultValue={defaultValueCheckOut}
                     size="large"
-                    format="MM-DD-YYYY"
+                    format="YYYY-MM-DD"
                     onChange={(obj, value) => onChangeDateCheckOut(value)}
                   />
                 }

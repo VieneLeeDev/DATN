@@ -5,16 +5,24 @@ import { HotelStore } from "@/stores/hotel.store";
 import { BookingStore } from "@/stores/booking.store";
 import { dataApp } from "@/stores/data";
 import { toJS } from "mobx";
+import { AuthStore } from "./auth.store";
+import { supabase } from "@/utils/supabaseClient";
+
+const FilterStore = types.model("FilterStore", {
+  filter_from: "",
+  filter_to: "",
+  filter_guests: 1,
+  filter_city: "",
+});
 
 const AppStore = types
   .model("AppStore", {
     room: types.optional(RoomStore, {}),
     hotel: types.optional(HotelStore, {}),
     booking: types.optional(BookingStore, {}),
-    filter_from: "",
-    filter_to: "",
-    filter_guests: 1,
-    filter_city:''
+    auth: types.optional(AuthStore, {}),
+    filter: types.optional(FilterStore, {}),
+    // user_id: types.string,
   })
   .views((self: any) => {
     return {};
@@ -22,6 +30,25 @@ const AppStore = types
   .actions((self: any) => {
     return {
       afterCreate() {
+        const fetchData = async () => {
+          //get data room and hotel from api supabase
+          let dataRoom, dataHotel;
+
+          const getDataRoom = async () => {
+            const { data } = await supabase.from("rooms").select();
+            return data;
+          };
+
+          const getDataHotel = async () => {
+            const { data } = await supabase.from("hotels").select();
+            return data;
+          };
+
+          dataRoom = await getDataRoom();
+          dataHotel = await getDataHotel();
+          appStore.setData(dataRoom,dataHotel)
+        };
+        fetchData();
         console.log("appStore", toJS(self));
         if (typeof window !== "undefined") {
           try {
@@ -35,27 +62,35 @@ const AppStore = types
         }
       },
       setDuration(from: string, to: string) {
-        self.filter_from = from;
-        self.filter_to = to;
+        self.filter.filter_from = from;
+        self.filter.filter_to = to;
       },
       setGuests(num: number) {
-        self.filter_guests = num;
+        self.filter.filter_guests = num;
       },
       setCitys(city: string) {
-        self.filter_city = city;
+        self.filter.filter_city = city;
       },
-      resetFilter(){
-        self.filter_from = '',
-        self.filter_to = '',
-        self.filter_guests= 1,
-        self.filter_city=''
-      }
+      resetFilter() {
+        (self.filter.filter_from = ""),
+          (self.filter.filter_to = ""),
+          (self.filter.filter_guests = 1),
+          (self.filter.filter_city = "");
+      },
+      setData(dataRoom: any, dataHotel: any) {
+        self.room.items = dataRoom;
+        self.hotel.items = dataHotel;
+      },
     };
   });
 
-export const appStore = AppStore.create(dataApp);
+export const appStore = AppStore.create({
+  room: { items: [] },
+  hotel: { items: [] },
+});
+// export const appStore = AppStore.create(dataApp);
 
 onSnapshot(appStore, (snapshot) => {
-  console.log("appStore", snapshot);
-  localStorage.setItem("bookingApp", JSON.stringify(snapshot));
+  // console.log("appStore", snapshot);
+  // localStorage.setItem("bookingApp", JSON.stringify(snapshot));
 });

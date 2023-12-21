@@ -1,21 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
 import "react-datetime/css/react-datetime.css";
 import { DatePicker } from "antd";
-import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import type { RangePickerProps } from "antd/es/date-picker";
 import { observer } from "mobx-react-lite";
 import { appStore } from "@/stores";
 
-interface FormSearchProps {
-  dataCity?: any[];
-}
-
-type RangeValue = [Dayjs | null, Dayjs | null] | null;
 const { RangePicker } = DatePicker;
 
-const FormSearch = observer(({ dataCity }: FormSearchProps) => {
+const FormSearch = observer(() => {
   const handleChangeDate = (obj: any, value: any) => {
     appStore.setDuration(value[0], value[1]);
   };
@@ -24,7 +17,7 @@ const FormSearch = observer(({ dataCity }: FormSearchProps) => {
   const disabledDate: RangePickerProps["disabledDate"] = (current) => {
     return current && current < dayjs().endOf("day");
   };
-  
+
   return (
     <div className="hidden container xl:flex xl:mx-auto h-[75px]">
       <div className="w-1/2 h-full">
@@ -44,7 +37,7 @@ const FormSearch = observer(({ dataCity }: FormSearchProps) => {
           <div className="w-full h-2/3 px-3 bg-white ">
             <select
               className="w-full h-full outline-none bg-white"
-              value={appStore.filter_guests}
+              value={appStore.filter.filter_guests}
               onChange={(e) => appStore.setGuests(Number(e.target.value))}
             >
               {appStore.room.guestList.map((value: any) => (
@@ -62,8 +55,8 @@ const FormSearch = observer(({ dataCity }: FormSearchProps) => {
               className="w-full h-full outline-none bg-white"
               onChange={(e) => appStore.setCitys(e.target.value)}
             >
-              <option value={""}>All</option>dataCity
-              {dataCity?.map((value: any) => (
+              <option value={""}>All</option>
+              {appStore.room.cityList?.map((value: any) => (
                 <option key={value} value={value}>
                   {value}
                 </option>
