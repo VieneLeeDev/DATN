@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 
 interface CartProps {
@@ -15,7 +16,7 @@ const Card = (props: CartProps) => {
         <Image
           fill
           className="object-cover"
-          src={props.img}
+          src={props.img || ""}
           alt="pic"
           sizes="w-full h-full"
         />
@@ -24,9 +25,9 @@ const Card = (props: CartProps) => {
         </div>
       </div>
       <div className="container h-1/4 text-left p-2">
-        <h2 className="text-md font-bold text-ellipsis whitespace-wrap overflow-hidden">
+        <p className="text-md font-bold text-ellipsis whitespace-wrap overflow-hidden">
           {props.name}
-        </h2>
+        </p>
         <p className="text-[#3b4249]">
           <span>
             <strong>€{props.price}</strong>{" "}

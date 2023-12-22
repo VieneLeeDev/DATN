@@ -1,9 +1,6 @@
 "use client";
-import { AuthStore } from "@/stores/auth.store";
-const authStore = AuthStore.create({
-  auth: {},
-  user_id: "",
-});
+import { authStore } from "@/stores/auth.store";
+
 const login = () => {
   return (
     <div className="flex justify-center items-center bg-gradient-to-r from-orange-300 via-slate-300 to-orange-300 h-screen">

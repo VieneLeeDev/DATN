@@ -1,16 +1,18 @@
-import { destroy, getParent, getRoot, types } from "mobx-state-tree";
+import { appStore } from "@/stores";
+import { destroy, getParent, types, flow, getRoot } from "mobx-state-tree";
 import { toJS, values } from "mobx";
 import { v4 as uuidv4 } from "uuid";
 import { supabase } from "@/utils/supabaseClient";
+import { notification } from "antd";
 
 const Booking = types
   .model("Booking", {
     id: types.identifier,
-    user_id: "",
-    room_id: "",
-    from: "",
-    to: "",
-    total_price: 0,
+    user_id: types.optional(types.string, ""),
+    room_id: types.optional(types.string, ""),
+    from: types.optional(types.string, ""),
+    to: types.optional(types.string, ""),
+    total_price: types.optional(types.number, 0),
   })
   .views((self: any) => {
     const root: any = getRoot(self);
@@ -33,7 +35,7 @@ const Booking = types
 
 export const BookingStore = types
   .model("BookingStore", {
-    items: types.array(Booking),
+    items: types.optional(types.array(Booking), []),
   })
   .views((self: any) => {
     return {
@@ -43,25 +45,35 @@ export const BookingStore = types
     };
   })
   .actions((self: any) => {
-    const root = getRoot(self);
     return {
-      create: function* (item: {
-        room_id: string;
+      create: flow(function* (items: {
         from: string;
         to: string;
+        room_id: string;
         total_price: number;
       }) {
-        // const id = uuidv4();
-        // yield supabase.from("bookings").insert({
-        //   id,
-        //   room_id: "room_1",
-        //   from: "10-11-2023",
-        //   to: "15-11-2023",
-        //   total_price: 1000,
-        // });
-      },
+        try {
+          const id = uuidv4();
+          const { data } = yield supabase.from("bookings").insert({
+            id,
+            from: items.from,
+            to: items.to,
+            room_id: items.room_id,
+            total_price: items.total_price,
+          });
+          notification.success({ message: "Booking thành công!" });
+        } catch (error) {
+          console.error(error);
+        }
+      }),
+      fetchData: flow(function* () {
+        const { data } = yield supabase.from("bookings").select();
+        return data;
+      }),
       delete(item: any) {
         destroy(item);
       },
     };
   });
+
+export const bookingStore: any = BookingStore.create({});

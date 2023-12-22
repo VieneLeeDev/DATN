@@ -1,8 +1,8 @@
 "use client";
-import { applySnapshot, onSnapshot, types } from "mobx-state-tree";
+import { applySnapshot, flow, onSnapshot, types } from "mobx-state-tree";
 import { RoomStore } from "@/stores/room.store";
 import { HotelStore } from "@/stores/hotel.store";
-import { BookingStore } from "@/stores/booking.store";
+import { BookingStore, bookingStore } from "@/stores/booking.store";
 import { dataApp } from "@/stores/data";
 import { toJS } from "mobx";
 import { AuthStore } from "./auth.store";
@@ -22,45 +22,71 @@ const AppStore = types
     booking: types.optional(BookingStore, {}),
     auth: types.optional(AuthStore, {}),
     filter: types.optional(FilterStore, {}),
-    // user_id: types.string,
   })
   .views((self: any) => {
     return {};
   })
   .actions((self: any) => {
     return {
-      afterCreate() {
-        const fetchData = async () => {
-          //get data room and hotel from api supabase
-          let dataRoom, dataHotel;
+      afterCreate: flow(function* () {
+        try {
+          const fetchData = flow(function* () {
+            //get data room and hotel from api supabase
+            let dataRoom, dataHotel, dataBooking;
 
-          const getDataRoom = async () => {
-            const { data } = await supabase.from("rooms").select();
-            return data;
-          };
+            const getDataBooking = flow(function* () {
+              const { data } = yield supabase.from("bookings").select();
+              return data;
+            });
 
-          const getDataHotel = async () => {
-            const { data } = await supabase.from("hotels").select();
-            return data;
-          };
+            const getDataRoom = flow(function* () {
+              const { data } = yield supabase.from("rooms").select();
+              return data;
+            });
 
-          dataRoom = await getDataRoom();
-          dataHotel = await getDataHotel();
-          appStore.setData(dataRoom,dataHotel)
-        };
-        fetchData();
-        console.log("appStore", toJS(self));
+            const getDataHotel = flow(function* () {
+              const { data } = yield supabase.from("hotels").select();
+              return data;
+            });
+
+            dataRoom = yield getDataRoom();
+            dataHotel = yield getDataHotel();
+            dataBooking = yield getDataBooking();
+            yield appStore.setData(dataRoom, dataHotel, dataBooking);
+          });
+          yield fetchData();
+          console.log("appStore", toJS(self));
+        } catch (error) {
+          console.log(error);
+        }
+        // if (typeof window === "undefined") {
+        //   try {
+        //     const json = JSON.parse(localStorage.getItem("bookingApp") || "");
+        //     if (json) {
+        //       applySnapshot(self, json);
+        //     }
+        //   } catch (error) {
+        //     console.log(error);
+        //   }
+        // }
         if (typeof window !== "undefined") {
           try {
-            const json = JSON.parse(localStorage.getItem("bookingApp") || "");
-            // if (json) {
-            //   applySnapshot(self, json);
-            // }
+            if (localStorage) {
+              let json = localStorage.getItem("bookingApp");
+              if (json) {
+                json = JSON.parse(json);
+                applySnapshot(self, json);
+              }
+            } else {
+              console.warn(
+                "localStorage is not available in this environment."
+              );
+            }
           } catch (error) {
-            console.log(error);
+            console.error("Error parsing JSON:", error);
           }
         }
-      },
+      }),
       setDuration(from: string, to: string) {
         self.filter.filter_from = from;
         self.filter.filter_to = to;
@@ -77,20 +103,25 @@ const AppStore = types
           (self.filter.filter_guests = 1),
           (self.filter.filter_city = "");
       },
-      setData(dataRoom: any, dataHotel: any) {
+      setData: flow(function* (
+        dataRoom: any,
+        dataHotel: any,
+        dataBooking: any
+      ) {
         self.room.items = dataRoom;
         self.hotel.items = dataHotel;
-      },
+        self.booking.items = dataBooking
+      }),
     };
   });
 
-export const appStore = AppStore.create({
+export const appStore: any = AppStore.create({
   room: { items: [] },
   hotel: { items: [] },
+  booking: { items: [] },
 });
-// export const appStore = AppStore.create(dataApp);
 
 onSnapshot(appStore, (snapshot) => {
-  // console.log("appStore", snapshot);
-  // localStorage.setItem("bookingApp", JSON.stringify(snapshot));
+  console.log("appStore", snapshot);
+  localStorage.setItem("bookingApp", JSON.stringify(snapshot));
 });

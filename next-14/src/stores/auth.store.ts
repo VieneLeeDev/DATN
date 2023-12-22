@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/supabaseClient";
-import { flow, getRoot, types } from "mobx-state-tree";
+import { flow, getRoot, resolveIdentifier, types } from "mobx-state-tree";
 import { appStore } from ".";
 import { toJS } from "mobx";
 
@@ -10,10 +10,21 @@ const Auth = types.model("Auth", {
 });
 export const AuthStore = types
   .model("AuthStore", {
-    auth: types.map(Auth),
+    auth: types.optional(Auth, {
+      id: "",
+      email: "",
+      password: "",
+    }),
   })
   .actions((self) => {
     return {
+      afterCreate: flow(function* () {
+        try {
+          const { data } = yield supabase.auth.getUserIdentities();
+        } catch (error) {
+          console.log(error);
+        }
+      }),
       signUp: flow(function* () {
         const {
           data: { user, session },
@@ -52,7 +63,6 @@ export const AuthStore = types
           password: "levien_209a",
         });
         if (!error) {
-          self.auth.set("id", user.id);
           console.log(toJS(self));
         }
       }),
@@ -61,3 +71,10 @@ export const AuthStore = types
       }),
     };
   });
+export const authStore = AuthStore.create({
+  auth: {
+    id: "",
+    email: "",
+    password: "",
+  },
+});

@@ -5,10 +5,17 @@ import dayjs from "dayjs";
 import type { RangePickerProps } from "antd/es/date-picker";
 import { observer } from "mobx-react-lite";
 import { appStore } from "@/stores";
+import { useEffect, useState } from "react";
 
 const { RangePicker } = DatePicker;
 
 const FormSearch = observer(() => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const handleChangeDate = (obj: any, value: any) => {
     appStore.setDuration(value[0], value[1]);
   };
@@ -19,7 +26,7 @@ const FormSearch = observer(() => {
   };
 
   return (
-    <div className="hidden container xl:flex xl:mx-auto h-[75px]">
+    <div className="hidden container xl:flex xl:mx-auto h-[75px]" suppressHydrationWarning={true}>
       <div className="w-1/2 h-full">
         <h3 className="text-white h-1/3 font-bold"> Check-in & Check-out</h3>
         <div className="w-full h-2/3 ">
@@ -40,11 +47,12 @@ const FormSearch = observer(() => {
               value={appStore.filter.filter_guests}
               onChange={(e) => appStore.setGuests(Number(e.target.value))}
             >
-              {appStore.room.guestList.map((value: any) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
+              {isClient &&
+                appStore.room.guestList.map((value: any) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
             </select>
           </div>
         </div>
@@ -55,12 +63,13 @@ const FormSearch = observer(() => {
               className="w-full h-full outline-none bg-white"
               onChange={(e) => appStore.setCitys(e.target.value)}
             >
-              <option value={""}>All</option>
-              {appStore.room.cityList?.map((value: any) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
+              <option value={""}>all</option>
+              {isClient &&
+                appStore.room.cityList?.map((value: any) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
             </select>
           </div>
         </div>

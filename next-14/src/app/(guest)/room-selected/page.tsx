@@ -10,6 +10,7 @@ import { appStore } from "@/stores";
 import Image from "next/image";
 import { supabase } from "@/utils/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
+import { BookingStore, bookingStore } from "@/stores/booking.store";
 dayjs.extend(customParseFormat);
 
 const DetailRoom = observer(({ params }: { params: { id: string } }) => {
@@ -21,8 +22,6 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
   });
 
   const router = useRouter();
-
-  const searchParams = useSearchParams();
 
   const dataInSearch = {
     checkIn: appStore.filter.filter_from,
@@ -84,38 +83,15 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
     dataInSearch.checkOut === "" ? dayjs() : dayjs(`${dataInSearch.checkOut}`);
 
   const handleOrder = async () => {
-    // const dataBooking = {
-    //   room_id: roomSelected?.id,
-    //   from: dataInBill.checkIn,
-    //   to: dataInBill.checkOut,
-    //   total_price: roomSelected?.price * count,
-    // };
-    const id = uuidv4();
     const dataBooking = {
-      room_id: "room_1",
-      from: "10-11-2023",
-      to: "10-11-2023",
-      total_price: 1000,
+      room_id: roomSelected?.id,
+      from: dataInBill.checkIn,
+      to: dataInBill.checkOut,
+      total_price: roomSelected?.price * count,
     };
-    // get user id by supabase func
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    const user_id = user?.id;
-    const { data, error } = await supabase
-      .from("bookings")
-      .insert([
-        {
-          id: id,
-          ...dataBooking,
-          user_id,
-        },
-      ])
-      .select();
-      notification.success({message:"Tạo mới thành công!"})
-    // appStore.booking.create(dataBooking);
-    // appStore.resetFilter();
-    // router.push("/received");
+    await appStore.booking.create(dataBooking);
+    await appStore.resetFilter();
+    router.push("/received");
   };
 
   const roomSelected: any = appStore.room.itemSelected || {};

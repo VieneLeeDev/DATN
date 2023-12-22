@@ -25,7 +25,7 @@ const Room = types
 
 export const RoomStore = types
   .model("RoomStore", {
-    items: types.array(Room),
+    items: types.optional(types.array(Room),[]),
     itemSelected_id: "",
   })
   .views((self: any) => {
@@ -44,18 +44,18 @@ export const RoomStore = types
               .filter(
                 (book: any) =>
                   moment(book.from,"YYYY-MM-DD").isBetween(
-                    moment(root.filter.filter.filter_from,"YYYY-MM-DD"),
-                    moment(root.filter.filter.filter_to,"YYYY-MM-DD"),
+                    moment(root.filter.filter_from,"YYYY-MM-DD"),
+                    moment(root.filter.filter_to,"YYYY-MM-DD"),
                     undefined,
                     "[]"
                   ) ||
                   moment(book.to,"YYYY-MM-DD").isBetween(
-                    moment(root.filter.filter.filter_from,"YYYY-MM-DD"),
-                    moment(root.filter.filter.filter_to,"YYYY-MM-DD"),
+                    moment(root.filter.filter_from,"YYYY-MM-DD"),
+                    moment(root.filter.filter_to,"YYYY-MM-DD"),
                     undefined,
                     "[]"
                   ) ||
-                  moment(root.filter.filter.filter_from,"YYYY-MM-DD").isBetween(
+                  moment(root.filter.filter_from,"YYYY-MM-DD").isBetween(
                     moment(book.from,"YYYY-MM-DD"),
                     moment(book.to,"YYYY-MM-DD"),
                     undefined,
