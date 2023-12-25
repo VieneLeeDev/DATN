@@ -40,19 +40,19 @@ export const BookingStore = types
   .views((self: any) => {
     return {
       get itemsSorted() {
-        let _result;
-        const getData = async () => {
-          const {
-            data: { user },
-          } = await supabase.auth.getUser();
-          const { data } = await supabase
-            .from("bookings")
-            .select("*")
-            .eq("user_id", user?.id);
-          _result = data;
-        };
-        getData();
-        return values(_result);
+        // const getData = async () => {
+        //   let _result;
+        //   const {
+        //     data: { user },
+        //   } = await supabase.auth.getUser();
+        //   const { data } = await supabase
+        //     .from("bookings")
+        //     .select("*")
+        //     .eq("user_id", user?.id);
+        // _result = data;
+        // };
+        // getData();
+        return values(self.items);
       },
     };
   })
