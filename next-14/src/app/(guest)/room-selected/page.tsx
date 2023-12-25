@@ -1,19 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { DatePicker, notification } from "antd";
+import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useRouter } from "next/navigation";
-import { observer } from "mobx-react";
-import { appStore } from "@/stores";
+import {inject, observer} from "mobx-react";
 import Image from "next/image";
-import { supabase } from "@/utils/supabaseClient";
-import { v4 as uuidv4 } from "uuid";
-import { BookingStore, bookingStore } from "@/stores/booking.store";
 dayjs.extend(customParseFormat);
 
-const DetailRoom = observer(() => {
+const DetailRoom = inject("appStore")(observer(({appStore}: { appStore?: any }) => {
   const [count, setCount] = useState(1);
   const [reload, setReload] = useState(false);
   const [dataInBill, setDataInBill] = useState({
@@ -207,5 +202,8 @@ const DetailRoom = observer(() => {
       </div>
     </div>
   );
-});
-export default DetailRoom;
+}));
+
+export default function Page() {
+  return <DetailRoom/>;
+};
