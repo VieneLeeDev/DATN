@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { BookingStore, bookingStore } from "@/stores/booking.store";
 dayjs.extend(customParseFormat);
 
-const DetailRoom = observer(({ params }: { params: { id: string } }) => {
+const DetailRoom = observer(() => {
   const [count, setCount] = useState(1);
   const [reload, setReload] = useState(false);
   const [dataInBill, setDataInBill] = useState({
@@ -91,7 +91,8 @@ const DetailRoom = observer(({ params }: { params: { id: string } }) => {
     };
     await appStore.booking.create(dataBooking);
     await appStore.resetFilter();
-    router.push("/received");
+    // router.push("/received");
+    window.location.href = "/received";
   };
 
   const roomSelected: any = appStore.room.itemSelected || {};

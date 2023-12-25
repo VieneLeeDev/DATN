@@ -1,6 +1,7 @@
 "use client";
 import { appStore } from "@/stores";
 import { bookingStore } from "@/stores/booking.store";
+import { supabase } from "@/utils/supabaseClient";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 const Received = observer(() => {
@@ -24,7 +25,7 @@ const Received = observer(() => {
       {/**Booking details */}
       <h3 className="text-xl font-bold ">Booking Details</h3>
       {isClient &&
-       appStore.booking.items.map((booking: any) => (
+        appStore.booking.items.map((booking: any) => (
           <div
             key={booking.id}
             className="container flex flex-col h-auto border-[1px] my-[25px] p-10 shadow-md"

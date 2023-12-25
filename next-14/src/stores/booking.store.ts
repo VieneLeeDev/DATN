@@ -40,7 +40,19 @@ export const BookingStore = types
   .views((self: any) => {
     return {
       get itemsSorted() {
-        return values(self.items);
+        let _result;
+        const getData = async () => {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          const { data } = await supabase
+            .from("bookings")
+            .select("*")
+            .eq("user_id", user?.id);
+          _result = data;
+        };
+        getData();
+        return values(_result);
       },
     };
   })
@@ -54,25 +66,32 @@ export const BookingStore = types
       }) {
         try {
           const id = uuidv4();
-          const { data } = yield supabase.from("bookings").insert({
+          yield supabase.from("bookings").insert({
             id,
             from: items.from,
             to: items.to,
             room_id: items.room_id,
             total_price: items.total_price,
           });
+          yield self.fetchData();
           notification.success({ message: "Booking thành công!" });
         } catch (error) {
           console.error(error);
         }
       }),
       fetchData: flow(function* () {
-        const { data } = yield supabase.from("bookings").select();
-        return data;
+        try {
+          const { data } = yield supabase.from("bookings").select("*");
+          self.items = data;
+          return data;
+        } catch (error) {
+          console.log(error);
+        }
       }),
-      delete(item: any) {
+      delete: flow(function* (item: any) {
+        yield supabase.from("bookings").delete().eq("id", item.id);
         destroy(item);
-      },
+      }),
     };
   });
 

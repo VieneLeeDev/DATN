@@ -6,6 +6,7 @@ import Link from "next/link";
 import Card from "@/components/Card";
 import { appStore } from "@/stores";
 import { useEffect, useState } from "react";
+import { supabase } from "@/utils/supabaseClient";
 
 const HomePage = observer(() => {
   const [isClient, setIsClient] = useState(false);
@@ -33,22 +34,23 @@ const HomePage = observer(() => {
             </div>
           </div>
           <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 place-items-center">
-            {isClient && appStore.room.itemsFiltered.map((room: any) => (
-              <Link
-                className="w-full h-full"
-                key={room.id}
-                onClick={() => appStore.room.pickItem(room)}
-                href={{ pathname: `/room-selected` }}
-              >
-                <Card
-                  name={`${room.id} | ${room.guest} peoples | ${room.size} - ${room.hotel?.name}`}
-                  description={room.description}
-                  price={room.price}
-                  city={room.hotel?.city}
-                  img={room.image_url}
-                />
-              </Link>
-            ))}
+            {isClient &&
+              appStore.room.itemsFiltered.map((room: any) => (
+                <Link
+                  className="w-full h-full"
+                  key={room.id}
+                  onClick={() => appStore.room.pickItem(room)}
+                  href={{ pathname: `/room-selected` }}
+                >
+                  <Card
+                    name={`${room.id} | ${room.guest} peoples | ${room.size} - ${room.hotel?.name}`}
+                    description={room.description}
+                    price={room.price}
+                    city={room.hotel?.city}
+                    img={room.image_url}
+                  />
+                </Link>
+              ))}
           </div>
         </div>
       </div>
@@ -57,4 +59,3 @@ const HomePage = observer(() => {
 });
 
 export default HomePage;
-// bg-center bg-cover bg-[url('https://images.unsplash.com/photo-1682685797828-d3b2561deef4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]
