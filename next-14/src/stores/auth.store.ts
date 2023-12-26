@@ -17,21 +17,14 @@ export const AuthStore = types
     })
     .actions((self) => {
         return {
-            // afterCreate: flow(function* () {
-            //     try {
-            //         const {data} = yield supabase.auth.getUserIdentities();
-            //     } catch (error) {
-            //         console.log(error);
-            //     }
-            // }),
             signUp: flow(function* () {
                 const {
                     data: {user, session},
                     error,
                 } = yield supabase.auth.signUp(
                     {
-                        email: "levien26092k1aaa@gmail.com",
-                        password: "levien_209a",
+                        email: "levien26092k1@gmail.com",
+                        password: "1",
                         options: {
                             data: {
                                 firstName: "Le",
@@ -58,8 +51,8 @@ export const AuthStore = types
                     data: {user},
                     error,
                 } = yield supabase.auth.signInWithPassword({
-                    email: "levien26092k1aaa@gmail.com",
-                    password: "levien_209a",
+                    email: "levien2@gmail.com",
+                    password: "2",
                 });
                 if (!error) {
                     console.log(toJS(self));
