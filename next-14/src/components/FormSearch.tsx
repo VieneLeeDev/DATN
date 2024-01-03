@@ -14,7 +14,7 @@ const FormSearch = observer(({appStore}: { appStore: any }) => {
 
     // validate datepicker
     const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-        return current && current < dayjs().endOf("day");
+        return current && current < dayjs().startOf("day");
     };
 
     return (

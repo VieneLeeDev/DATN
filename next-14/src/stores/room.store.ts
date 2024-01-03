@@ -40,31 +40,31 @@ export const RoomStore = types
                     (room: any) =>
                         room.guest >= root.filter.filter_guests //filter base on the guest of the room
                         && (!root.filter.filter_city || room.hotel?.city === root.filter.filter_city) //filter base on the city of the room
-                        && (!root.booking.itemsSorted
-                                .filter(
-                                    (book: any) =>
-                                        moment(book.from, "YYYY-MM-DD").isBetween(
-                                            moment(root.filter.filter_from, "YYYY-MM-DD"),
-                                            moment(root.filter.filter_to, "YYYY-MM-DD"),
-                                            undefined,
-                                            "[]"
-                                        ) ||
-                                        moment(book.to, "YYYY-MM-DD").isBetween(
-                                            moment(root.filter.filter_from, "YYYY-MM-DD"),
-                                            moment(root.filter.filter_to, "YYYY-MM-DD"),
-                                            undefined,
-                                            "[]"
-                                        ) ||
-                                        moment(root.filter.filter_from, "YYYY-MM-DD").isBetween(
-                                            moment(book.from, "YYYY-MM-DD"),
-                                            moment(book.to, "YYYY-MM-DD"),
-                                            undefined,
-                                            "[]"
-                                        )
-                                )
-                                .map((book: any) => book.room_id)
-                                .includes(room.id)
-                        )
+                        // && (!root.booking.itemsSorted
+                        //         .filter(
+                        //             (book: any) =>
+                        //                 moment(book.from, "YYYY-MM-DD").isBetween(
+                        //                     moment(root.filter.filter_from, "YYYY-MM-DD"),
+                        //                     moment(root.filter.filter_to, "YYYY-MM-DD"),
+                        //                     undefined,
+                        //                     "[]"
+                        //                 ) ||
+                        //                 moment(book.to, "YYYY-MM-DD").isBetween(
+                        //                     moment(root.filter.filter_from, "YYYY-MM-DD"),
+                        //                     moment(root.filter.filter_to, "YYYY-MM-DD"),
+                        //                     undefined,
+                        //                     "[]"
+                        //                 ) ||
+                        //                 moment(root.filter.filter_from, "YYYY-MM-DD").isBetween(
+                        //                     moment(book.from, "YYYY-MM-DD"),
+                        //                     moment(book.to, "YYYY-MM-DD"),
+                        //                     undefined,
+                        //                     "[]"
+                        //                 )
+                        //         )
+                        //         .map((book: any) => book.room_id)
+                        //         .includes(room.id)
+                        // )
                 );
                 return _return;
             },
