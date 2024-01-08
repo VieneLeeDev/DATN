@@ -7,18 +7,27 @@ import Card from "@/components/Card";
 import { inject } from "mobx-react";
 import { supabase } from "@/utils/supabaseClient";
 import { useEffect, useState } from "react";
+import { useExplorePathname } from "@/hooks";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const HomePage = inject("appStore")(
   observer(({ appStore }: { appStore?: any }) => {
     const [dataBooking, setDataBooking] = useState<any[]>();
-
+    const [dataUser, setDataUser] = useState<any[]>();
+    const router = useRouter();
     useEffect(() => {
-      const getDataFromView = async () => {
-        const { data } = await supabase.from("booking_view").select("*");
+      const getDataFromUser = async () => {
+        const { data } = await supabase.from("user").select();
         data && setDataBooking([...data]);
       };
-      getDataFromView();
+      getDataFromUser();
+      const check = async () => {
+        let { data, error } = await supabase.rpc("is_admin");
+        if (error) console.error(error);
+      };
+      check();
     }, []);
+
     return (
       <div className="flex flex-col w-full">
         <div className="w-full flex items-center h-[500px] bg-center bg-cover bg-[url('https://images.unsplash.com/photo-1682685797828-d3b2561deef4?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
@@ -41,8 +50,10 @@ const HomePage = inject("appStore")(
                 <Link
                   className="w-full h-full"
                   key={room.id}
-                  // onClick={() => appStore.room?.pickItem(room)}
-                  href={{ pathname: `/detail/${room.id}`, query: {...room} }}
+                  href={{
+                    pathname: `/room-selected`,
+                    query: { room_id: room.id },
+                  }}
                 >
                   <Card
                     name={`${room.id} | ${room.guest} peoples | ${room.size} - ${room.hotel?.name}`}

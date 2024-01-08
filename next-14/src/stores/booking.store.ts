@@ -47,9 +47,9 @@ export const BookingStore = types
   .actions((self: any) => {
     return {
       create: flow(function* (items: {
+        room_id: string;
         from: string;
         to: string;
-        room_id: string;
         total_price: number;
       }) {
         try {

@@ -1,14 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { inject, observer } from "mobx-react";
 import Image from "next/image";
 import moment from "moment";
 import _ from "lodash";
+import { useExplorePathname } from "@/hooks";
+import { supabase } from "@/utils/supabaseClient";
+import { toJS } from "mobx";
 dayjs.extend(customParseFormat);
+
+interface RoomDetail {
+  id: string;
+}
 
 const DetailRoom = inject("appStore")(
   observer(({ appStore }: { appStore?: any }) => {
@@ -18,14 +25,12 @@ const DetailRoom = inject("appStore")(
       checkIn: "",
       checkOut: "",
     });
-
-    const router = useRouter();
-
+    const [detailRoom, setDetailRoom] = useState<any>();
     const dataInSearch = {
       checkIn: appStore.filter.filter_from,
       checkOut: appStore.filter.filter_to,
     };
-
+    const router = useRouter();
     useEffect(() => {
       //check in the first time the date is empty ?if it's none empty we get the date from params to fill the bill : if it's empty we get curently date for data bill
       dataInSearch.checkIn === ""
@@ -39,7 +44,6 @@ const DetailRoom = inject("appStore")(
           });
       handleCountDays(dataInSearch.checkIn, dataInSearch.checkOut);
     }, []);
-
     useEffect(() => {
       // check date from form search
       if (dataInBill.checkIn !== "" && dataInBill.checkOut !== "") {
@@ -93,24 +97,38 @@ const DetailRoom = inject("appStore")(
         : dayjs(`${dataInSearch.checkOut}`);
 
     const handleOrder = async () => {
-      const dataBooking = {
-        room_id: roomSelected?.id,
-        from: dataInBill.checkIn,
-        to: dataInBill.checkOut,
-        total_price: roomSelected?.price * count,
-      };
-      await appStore.booking.create(dataBooking);
-      await appStore.resetFilter();
-      // router.push("/received");
-      window.location.href = "/received";
+      const { data: activeSession } = await supabase.auth.getSession();
+      console.log(activeSession.session);
+      if (!activeSession.session) {
+        //navigate to login page if user not login
+        router.push(`/login`);
+      } else {
+        //hanlle order if user logined
+        const dataBooking = {
+          room_id:detailRoom?.id ,
+          from: dataInBill.checkIn,
+          to: dataInBill.checkOut,
+          total_price: detailRoom?.price * count,
+        };
+        await appStore.booking.create(dataBooking);
+        await appStore.resetFilter();
+        window.location.href = "/received";
+      }
     };
+    const [pathname, roomId] = useExplorePathname();
 
-    const roomSelected: any = appStore.room.itemSelected || {};
+    useEffect(() => {
+      //get the room with id equal the room_id in params
+      const detail = appStore.room.itemSelected();
+      appStore.roomSelected(`${roomId}`);
+      setDetailRoom(detail);
+    }, []);
+
     return (
       <div className="container flex flex-col h-full justify-center items-center lg:py-[30px]">
         <div className="flex flex-col h-1/2 justify-center items-center lg:py-[20px">
           <h1 className="text-2xl md:text-4xl font-bold mb-10">
-            {roomSelected.hotel?.name}
+            {detailRoom?.id}
           </h1>
           <p className="text-center md:max-w-1/3 break-words">
             The Mountain Room is available with either double or single beds.
@@ -124,15 +142,15 @@ const DetailRoom = inject("appStore")(
             fill
             className="object-cover object-center w-full h-full"
             alt="pic"
-            src={roomSelected ? roomSelected?.image_url : ""}
+            src={detailRoom ? detailRoom?.image_url : ""}
           />
         </div>
         <hr className="container my-10" />
         <div className="container flex flex-col md:flex-row ">
           <div className="flex-[2]">
-            <p>{roomSelected.hotel?.description}</p>
+            {/* <p>{roomSelected.hotel?.description}</p> */}
             {/**Detail */}
-            <div className="flex-col lg:flex-row flex container min-h-[300px] border-[1px] p-5 my-10 lg:justify-between">
+            <div className="flex-col lg:flex-row flex container min-h-[300px] border-[1px] p-5 lg:justify-between">
               <h2 className="flex-[1] text-center text-2xl font-bold">
                 Details
               </h2>
@@ -140,15 +158,15 @@ const DetailRoom = inject("appStore")(
                 <ul>
                   <li className="flex my-5 break-words">
                     <span className="text-[#767b80] w-1/4">Guest:</span>
-                    <span className="w-3/4">{roomSelected?.guest}</span>
+                    <span className="w-3/4">{detailRoom?.guest}</span>
                   </li>
                   <li className="flex my-5 break-words">
                     <span className="text-[#767b80] w-1/4">Size:</span>
-                    <span className="w-3/4"> {roomSelected?.size}</span>
+                    <span className="w-3/4"> {detailRoom?.size}</span>
                   </li>
                   <li className="flex my-5 break-words">
                     <span className="text-[#767b80] w-1/4">Location:</span>
-                    <span className="w-3/4">{roomSelected?.hotel?.city}</span>
+                    <span className="w-3/4">{detailRoom?.hotel?.city}</span>
                   </li>
                 </ul>
               </div>
@@ -160,7 +178,7 @@ const DetailRoom = inject("appStore")(
               <div className="flex flex-col justify-center h-1/4">
                 <p className="text-xl">
                   <span className="text-2xl">
-                    <strong>€{roomSelected?.price}</strong>
+                    <strong>€{detailRoom?.price}</strong>
                   </span>{" "}
                   per Day
                 </p>
@@ -202,8 +220,8 @@ const DetailRoom = inject("appStore")(
                       €
                       {`${
                         dataInBill.checkIn !== ""
-                          ? roomSelected && roomSelected?.price * count
-                          : roomSelected?.price
+                        ? detailRoom && detailRoom?.price * count
+                        : detailRoom?.price
                       }`}
                     </strong>
                   </span>{" "}

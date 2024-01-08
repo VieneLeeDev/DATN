@@ -34,6 +34,13 @@ export default function SigninForm() {
       provider: "github",
     });
   };
+  
+  const handleSignInWithFacebook = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "facebook",
+    });
+  };
+
 
   return (
     <>
@@ -85,6 +92,16 @@ export default function SigninForm() {
               src={`../../../github.svg`}
               className="w-full h-full"
               alt="github"
+            />
+          </button>
+          <button
+            onClick={handleSignInWithFacebook}
+            className="w-[50px] h-[50px]"
+          >
+            <img
+              src={`../../../facebook.svg`}
+              className="w-full h-full"
+              alt="google"
             />
           </button>
           <button

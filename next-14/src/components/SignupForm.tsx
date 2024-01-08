@@ -14,6 +14,7 @@ export default function SignupForm() {
       email: userInfomation.email,
       password: userInfomation.password,
     });
+
     notification.warning({ message: "Check your email to sign up!" });
   };
   return (
