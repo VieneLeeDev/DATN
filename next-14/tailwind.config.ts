@@ -13,7 +13,8 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
-        basic: "#333333",
+        basic: "#3b4249",
+		'nav-dashboard':"#191919",
       },
     },
   },

@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/supabaseClient.js", "src/utils/supabaseClient.js"],
+  "include": ["svgr.d.ts","video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/supabaseClient.js", "src/utils/supabaseClient.js","src/middleware.ts"],
   "exclude": ["node_modules"]
 }
