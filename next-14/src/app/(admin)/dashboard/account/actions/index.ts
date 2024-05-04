@@ -1,3 +1,5 @@
+"use server"
+
 import { createSupabaseAdmin } from "@/utils/supabaseClient";
 
 export interface Account {

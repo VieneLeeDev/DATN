@@ -4,20 +4,33 @@ import type { FormProps } from 'antd';
 import { Option } from 'antd/es/mentions'
 import React, { useTransition } from 'react'
 import { Account, createMember } from "../../actions";
+import { supabase } from "@/utils/supabaseClient";
 
 const CreateForm = () => {
 	const [isPending, startTransition] = useTransition()
-	const onFinish = (data: Account) => {
+	const onFinish = async (data: Account) => {
 		startTransition(async () => {
-			const result = await createMember(data)
-			const { error } = result && JSON.parse(result)
-			if (error.message) {
-				notification.error({ message: 'Fail!' })
+			// const result = await createMember(data)
+			// const { error } = result && JSON.parse(result)
+			// if (error.message) {
+			// 	notification.error({ message: error.message })
+			// 	console.log(error)
+			// }
+			// else {
+			// 	notification.success({ message: 'Succesfull!' })
+			// }
+			const { data, error } = await supabase.auth.admin.createUser({
+				email: 'user@email.com',
+				password: 'password',
+				user_metadata: { name: 'Yoda' }
+			})
+			if (error) {
+				notification.error({ message: error.message })
+				console.log(error)
 			}
 			else {
 				notification.success({ message: 'Succesfull!' })
 			}
-
 		})
 	};
 
