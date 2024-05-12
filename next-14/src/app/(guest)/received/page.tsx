@@ -48,10 +48,6 @@ const Received = inject("appStore")(
 									<span className="text-lg text-[#3b4249]">Total:</span>
 									<span className="font-bold text-[#3b4249]">{`€${booking.total_price}`}</span>
 								</li>
-								<li className="flex flex-1 flex-col mb-5 mr-10  md:border-r-[1px] md:border-dashed md:border-[#d3ced2]">
-									<span className="text-lg text-[#3b4249]">Info:</span>
-									<span className="font-bold text-[#3b4249]">{`${booking.room?.hotel?.name} ${booking.room?.hotel?.city}`}</span>
-								</li>
 								<li className="flex flex-1 mb-5 mr-10">
 									<button
 										onClick={() => booking.delete()}

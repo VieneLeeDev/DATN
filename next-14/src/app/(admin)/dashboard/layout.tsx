@@ -3,9 +3,8 @@
 import React from 'react';
 import { Layout, Menu, theme } from 'antd';
 import HeaderDashboard from '@/components/HeaderDashboard';
-import icon_room from '../../../../public/icon_room.svg'
-import icon_account from '../../../../public/icon_account.svg'
-import Image from 'next/image';
+import { MdRoomPreferences } from "react-icons/md";
+import { RiAccountCircleFill } from "react-icons/ri";
 import { useRouter } from 'next/navigation';
 import type { MenuProps } from 'antd';
 import Link from 'next/link';
@@ -21,11 +20,11 @@ const layout = ({ children }: { children: React.ReactNode }) => {
 
 	const items = [{
 		key: 1,
-		icon: <img src={`${icon_room}`} height={24} width={24} alt=''></img>,
+		icon: <MdRoomPreferences height={32} width={32} />,
 		label: <Link href="/dashboard">Room</Link>
 	}, {
 		key: 2,
-		icon: <img src={`${icon_account}`} height={24} width={24} alt=''></img>,
+		icon: <RiAccountCircleFill height={32} width={32} />,
 		label: <Link href="/dashboard/account">Account</Link>,
 	},]
 

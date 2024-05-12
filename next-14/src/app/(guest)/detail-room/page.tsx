@@ -24,7 +24,7 @@ const DetailRoom = inject("appStore")(
 			checkIn: "",
 			checkOut: "",
 		});
-		const [detailRoom, setDetailRoom] = useState({ id: "", price: 0, image_url: '', size: '', guest: '', hotel_id: '' })
+		const [detailRoom, setDetailRoom] = useState({ id: "", price: 0, image_url: '', size: '', guest: '' })
 		const dataInSearch = {
 			checkIn: appStore.filter.filter_from,
 			checkOut: appStore.filter.filter_to,
@@ -179,7 +179,6 @@ const DetailRoom = inject("appStore")(
 				<hr className="container my-10" />
 				<div className="container flex flex-col md:flex-row ">
 					<div className="flex-[2]">
-						{/* <p>{roomSelected.hotel?.description}</p> */}
 						{/**Detail */}
 						<div className="flex-col lg:flex-row flex container min-h-[300px] border-[1px] p-5 lg:justify-between">
 							<h2 className="flex-[1] text-center text-2xl font-bold">

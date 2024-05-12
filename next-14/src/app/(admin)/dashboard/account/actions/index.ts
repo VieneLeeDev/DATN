@@ -1,6 +1,8 @@
 "use server"
 
-import { createSupabaseAdmin } from "@/utils/supabaseClient";
+import { createSupabaseAdmin, supabase } from "@/utils/supabaseClient";
+import { notification } from "antd";
+import { unstable_noStore } from "next/cache";
 
 export interface Account {
 	email: string,
@@ -24,7 +26,6 @@ export async function createMember(data: Account) {
 			role: data.role
 		}
 	})
-
 	if (createResult.error?.message) {
 		return JSON.stringify(createResult)
 	}
@@ -42,9 +43,27 @@ export async function createMember(data: Account) {
 	}
 }
 
+
+export async function readMembers() {
+	unstable_noStore()
+	const supabase = await createSupabaseAdmin()
+	return await supabase.from("permission").select("*,member(*)")
+}
+
+
+
 export async function updateMemberById(id: string) {
 
 }
 
-export async function deleteMemberById(id: string) { }
-export async function readMembers() { }
+export async function deleteMemberById(id: string) {
+	const supabase = await createSupabaseAdmin()
+
+	try {
+		const deleteResult = await supabase.auth.admin.deleteUser(id)
+		return JSON.stringify(deleteResult)
+	} catch (error) {
+		return JSON.stringify(error)
+	}
+
+}

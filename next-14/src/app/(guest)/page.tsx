@@ -45,7 +45,6 @@ const HomePage = inject("appStore")(
 										name={`${room.id}`}
 										description={room.description}
 										price={room.price}
-										city={room.hotel?.location}
 										img={room.image_url}
 										guest={`${room.guest} peoples `}
 										size={` ${room.size}`}

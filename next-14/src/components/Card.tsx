@@ -6,7 +6,6 @@ interface CartProps {
 	name: string;
 	price: number;
 	description?: string;
-	city: string;
 	img: string;
 	guest: string;
 	size: string

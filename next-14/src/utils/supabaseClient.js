@@ -6,7 +6,7 @@ const supabaseRole = process.env.SERVICE_ROLE
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function createSupabaseAdmin() {
-	return createClient(supabaseUrl,supabaseKey, supabaseRole, {
+	return createClient(supabaseUrl, supabaseRole, {
 		auth: {
 			autoRefreshToken: false,
 			persistSession: false

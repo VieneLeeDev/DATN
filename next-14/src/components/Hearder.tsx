@@ -46,11 +46,12 @@ export const Header = () => {
 	const getUserRole = async () => {
 		const { data: activeSession } = await supabase.auth.getSession();
 		if (activeSession.session) {
-			const { data } = await supabase.from('user_role').select('role_id').eq('user_id', activeSession?.session.user.id)
+			const { data } = await supabase.from('permission').select().eq('member_id', activeSession?.session.user.id)
 			if (data) {
-				let role = data[0]
-				if (role && role.role_id === 2) {
-					setRoleUser('admin')
+				let role = data[0].role
+				console.log(role)
+				if (role === 'admin') {
+					setRoleUser(role)
 				}
 			}
 		}
@@ -58,7 +59,6 @@ export const Header = () => {
 	const initLayout = async () => {
 		getUserName()
 		getUserRole()
-
 	}
 	useEffect(() => {
 		initLayout()

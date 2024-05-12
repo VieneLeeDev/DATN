@@ -32,10 +32,6 @@ const ModalAddBooking = ({ isOpenModal, toggleModal }: { isOpenModal: boolean, t
 								<select className="h-[65%] w-full border-[1px] px-2"></select>
 							</div>
 							<div className="w-full h-[70px]">
-								<label className="h-[35%] text-xl">Hotel:</label>
-								<select className="h-[65%] w-full border-[1px] px-2"></select>
-							</div>
-							<div className="w-full h-[70px]">
 								<label className="h-[35%] text-xl">User:</label>
 								<select className="h-[65%] w-full border-[1px] px-2"></select>
 							</div>

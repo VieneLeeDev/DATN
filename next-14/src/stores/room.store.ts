@@ -6,23 +6,12 @@ import _ from "lodash";
 const Room = types
 	.model("Room", {
 		id: types.identifier,
-		hotel_id: "",
 		image_url: "",
 		price: 0,
 		size: 0, // unit is m2
 		guest: 0, // people
 		description: ""
 	})
-	.views((self: any) => {
-		const root: any = getRoot(self);
-		return {
-			get hotel() {
-				return values(root.hotel.items).find(
-					(hotel: any) => hotel.id === self.hotel_id
-				);
-			},
-		};
-	});
 
 export const RoomStore = types
 	.model("RoomStore", {
@@ -40,8 +29,6 @@ export const RoomStore = types
 				let _return: readonly any[] = self.itemsSorted.filter(
 					(room: any) =>
 						room.guest >= root.filter.filter_guests &&
-						(!root.filter.filter_city ||
-							room.hotel?.city === root.filter.filter_city) &&
 						!root.booking.itemsSorted
 							.filter(
 								(book: any) =>
@@ -74,12 +61,6 @@ export const RoomStore = types
 					(item: any) => item.guest
 				);
 				return _.map(_.groupBy(_guests), (value, key) => key);
-			},
-			get cityList() {
-				const _city: readonly any[] = self.itemsSorted.map(
-					(item: any) => item.hotel.city
-				);
-				return _.map(_.groupBy(_city), (value, key) => key);
 			},
 			get itemSelected() {
 				return values(self.items).find((room: any) => room.id === self.itemSelected_id);
