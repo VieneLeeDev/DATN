@@ -10,10 +10,11 @@ const CreateForm = () => {
 	const onFinish = async (datauser: Account) => {
 		startTransition(async () => {
 			const result = await createMember(datauser)
+
 			if (result) {
 				const { error } = JSON.parse(result)
 				if (error?.message) {
-					notification.error({ message: "fail" })
+					notification.error({ message: "Duplicate email" })
 				}
 				else {
 					notification.success({ message: "succesfull" })
@@ -25,7 +26,12 @@ const CreateForm = () => {
 	const role = [{ value: 'admin', label: <span>Admin</span> }, { value: 'user', label: <span>User</span> }]
 	const status = [{ value: 'active', label: <span>Active</span> }, { value: 'resigned', label: <span>Resigned</span> }]
 	return (
-		<Form onFinish={onFinish} layout="vertical" style={{ width: "100%", maxWidth: "500px",margin:"0 auto" }}>
+		<Form 
+		initialValues={{
+			role: role[1].value,
+			status: status[0].value,
+		}} 
+		onFinish={onFinish} layout="vertical" style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}>
 			<Form.Item name="email" label='Email:' rules={[{ required: true, message: 'Enail is Required!' }]}>
 				<Input type="email"></Input>
 			</Form.Item>
@@ -69,11 +75,11 @@ const CreateForm = () => {
 			</Form.Item>
 
 			<Form.Item name={'role'} label='Roles:' >
-				<Select options={role} defaultValue={role[1]}>
+				<Select options={role} >
 				</Select>
 			</Form.Item>
 			<Form.Item name={'status'} label='Status:'>
-				<Select options={status} defaultValue={status[0]}>
+				<Select options={status} >
 				</Select>
 			</Form.Item>
 			<Space className="w-full flex justify-center" >

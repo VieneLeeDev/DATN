@@ -27,19 +27,14 @@ export async function createMember(data: Account) {
 		}
 	})
 	if (createResult.error?.message) {
-		return JSON.stringify(createResult)
+		return JSON.stringify({ data: null, error: { message: createResult.error?.message } })
 	}
 	else {
-		const memberResult = await supabase.from("member").insert({ id: createResult.data.user?.id, name: data.name })
-		if (memberResult.error?.message) {
-			return JSON.stringify(memberResult)
+		const permissionResult = await supabase.from("permission").insert({ member_id: createResult.data.user?.id, role: data.role, status: data.status })
+		if (permissionResult.error?.message) {
+			return JSON.stringify(permissionResult)
 		}
-		else {
-			const permissionResult = await supabase.from("permission").insert({ member_id: createResult.data.user?.id, role: data.role, status: data.status })
-			if (permissionResult.error?.message) {
-				return JSON.stringify(permissionResult)
-			}
-		}
+		else { return JSON.stringify({ data: createResult.data.user, error: null }) }
 	}
 }
 
