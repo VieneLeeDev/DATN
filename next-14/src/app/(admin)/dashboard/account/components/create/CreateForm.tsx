@@ -5,12 +5,12 @@ import { Option } from 'antd/es/mentions'
 import React, { useTransition } from 'react'
 import { Account, createMember } from "../../actions";
 
-const CreateForm = () => {
+const CreateForm = (props: any) => {
 	const [isPending, startTransition] = useTransition()
+	const {reloadFunction} = props
 	const onFinish = async (datauser: Account) => {
 		startTransition(async () => {
 			const result = await createMember(datauser)
-
 			if (result) {
 				const { error } = JSON.parse(result)
 				if (error?.message) {
@@ -20,6 +20,7 @@ const CreateForm = () => {
 					notification.success({ message: "succesfull" })
 				}
 			}
+			reloadFunction()
 		})
 	};
 

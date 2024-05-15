@@ -10,3 +10,8 @@ export type Ipermission = {
 		"created_at": string
 	}
 }
+
+export interface ICounterRole{
+	admin:number,
+	user:number,
+}

@@ -53,12 +53,11 @@ export async function updateMemberById(id: string) {
 
 export async function deleteMemberById(id: string) {
 	const supabase = await createSupabaseAdmin()
-
 	try {
 		const deleteResult = await supabase.auth.admin.deleteUser(id)
-		return JSON.stringify(deleteResult)
-	} catch (error) {
-		return JSON.stringify(error)
+		return JSON.stringify({data:{status:200,mesage:"Deleted"},error:null})
+	} catch (error: any) {
+		return JSON.stringify({errors: error.message})
 	}
 
 }
