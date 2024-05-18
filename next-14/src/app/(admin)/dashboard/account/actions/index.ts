@@ -1,7 +1,6 @@
 "use server"
 
 import { createSupabaseAdmin, supabase } from "@/utils/supabaseClient";
-import { notification } from "antd";
 import { unstable_noStore } from "next/cache";
 
 export interface Account {
@@ -16,25 +15,33 @@ export interface Account {
 
 export async function createMember(data: Account) {
 	const supabase = await createSupabaseAdmin()
-
-	// create account
-	const createResult = await supabase.auth.admin.createUser({
-		email: data.email,
-		password: data.password,
-		email_confirm: true,
-		user_metadata: {
-			role: data.role
-		}
-	})
-	if (createResult.error?.message) {
-		return JSON.stringify({ data: null, error: { message: createResult.error?.message } })
+	const checkEmail = await supabase.from('member').select("*").eq('email', data.email)
+	if (checkEmail.data?.length !== 0) {
+		return JSON.stringify({ data: null, error: { message: "This email address has already been registered!" } })
 	}
 	else {
-		const permissionResult = await supabase.from("permission").insert({ member_id: createResult.data.user?.id, role: data.role, status: data.status })
-		if (permissionResult.error?.message) {
-			return JSON.stringify(permissionResult)
+		// create account
+		const createResult = await supabase.auth.admin.createUser({
+			email: data.email,
+			password: data.password,
+			email_confirm: true,
+			user_metadata: {
+				'role': data.role,
+			}
+		})
+		if (createResult.error?.message) {
+			return JSON.stringify({ data: null, error: { message: createResult.error?.message } })
 		}
-		else { return JSON.stringify({ data: createResult.data.user, error: null }) }
+		else {
+			await supabase.from("member").update({ name: data.name }).eq('id', createResult.data.user?.id)
+			if (createResult.data.user?.user_metadata.role === 'admin') {
+				const permissionResult = await supabase.from("permission").update({ role: 'admin' }).eq('member_id', createResult.data.user?.id)
+				if (permissionResult.error?.message) {
+					return JSON.stringify(permissionResult)
+				}
+				else { return JSON.stringify({ data: createResult.data.user, error: null }) }
+			}
+		}
 	}
 }
 
@@ -55,9 +62,9 @@ export async function deleteMemberById(id: string) {
 	const supabase = await createSupabaseAdmin()
 	try {
 		const deleteResult = await supabase.auth.admin.deleteUser(id)
-		return JSON.stringify({data:{status:200,mesage:"Deleted"},error:null})
+		return JSON.stringify({ data: { status: 200, mesage: "Deleted" }, error: null })
 	} catch (error: any) {
-		return JSON.stringify({errors: error.message})
+		return JSON.stringify({ errors: error.message })
 	}
 
 }

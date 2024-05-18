@@ -28,7 +28,6 @@ export const Header = () => {
 				router.push('/login')
 			}
 		} catch (error) {
-			console.log(error);
 			notification.error({ message: `${error}` });
 		}
 	};
@@ -49,7 +48,6 @@ export const Header = () => {
 			const { data } = await supabase.from('permission').select().eq('member_id', activeSession?.session.user.id)
 			if (data) {
 				let role = data[0].role
-				console.log(role)
 				if (role === 'admin') {
 					setRoleUser(role)
 				}

@@ -62,11 +62,6 @@ export const BookingStore = types
 						total_price: items.total_price,
 					});
 					yield self.fetchData();
-						// self.id = id,
-						// self.room_id = items.room_id,
-						// self.from = items.from,
-						// self.to = items.to,
-						// self.total_price = items.total_price,
 						notification.success({ message: "Booking thành công!" });
 				} catch (error) {
 					notification.error({ message: "Booking không thành công!" });

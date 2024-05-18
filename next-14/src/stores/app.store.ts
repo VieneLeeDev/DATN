@@ -50,7 +50,6 @@ const AppStore = types
 						
 						dataBooking = yield getDataBooking();
 						yield appStore.setData(dataRoom, dataBooking);
-						console.log(toJS(appStore.room))
 					});
 					yield fetchData();
 				} catch (error) {
