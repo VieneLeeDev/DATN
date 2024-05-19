@@ -1,6 +1,7 @@
 "use server"
 
 import { createSupabaseAdmin, supabase } from "@/utils/supabaseClient";
+import { result } from "lodash";
 import { unstable_noStore } from "next/cache";
 
 export interface Account {
@@ -54,8 +55,33 @@ export async function readMembers() {
 
 
 
-export async function updateMemberById(id: string) {
-
+export async function updateMemberById(id: string, data: any) {
+	const supabase = await createSupabaseAdmin()
+	const userUpdate: any = await supabase.from('member').select("*").eq('id', id)
+	const resultUpdateAdvance = await supabase.from('permission').update({ role: data.role, status: data.status }).eq('member_id', id)
+	if (data.confirm) {
+		const resultResetPassword = await supabase.auth.admin.updateUserById(id, {
+			password: data.confirm
+		})
+	}
+	if (userUpdate.data.email === data.email) {
+		const resultUpdateMember = await supabase.from('member').update({ name: data.name }).eq('id', id)
+		if (resultUpdateMember.error?.message) {
+			return { data: null, error: { mesage: resultUpdateMember.error?.message } }
+		}
+		else {
+			return { data: { status: 200, mesage: "Update successfull!" }, error: null }
+		}
+	}
+	else {
+		const resultUpdateMember = await supabase.from('member').update({ name: data.name, email: data.email }).eq('id', id)
+		if (resultUpdateMember.error?.message) {
+			return { data: null, error: { mesage: resultUpdateMember.error?.message } }
+		}
+		else {
+			return { data: { status: 200, mesage: "Update successfull!" }, error: null }
+		}
+	}
 }
 
 export async function deleteMemberById(id: string) {

@@ -25,7 +25,7 @@ const AccountPage = () => {
 	const [isShowModalChangePassword, setIsShowModalChangePassword] = useState(false)
 	const defaultCheckedList = ['Admin', 'User'];
 	const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(defaultCheckedList);
-	const [isLoading, setState] = useState(true)
+	const [isLoading, setIsLoading] = useState(true)
 	const fetchApi = async () => {
 		const { data: members } = await readMembers()
 		if (members) {
@@ -35,7 +35,7 @@ const AccountPage = () => {
 			setDataSource(data)
 			setCounterRole({ admin: numberAdmin.length, user: numberUser.length })
 		}
-		setState(false)
+		setIsLoading(false)
 	}
 
 	useEffect(() => {
@@ -48,7 +48,7 @@ const AccountPage = () => {
 	}
 
 	const handleDeleteUser = async () => {
-		setState(true)
+		setIsLoading(true)
 		try {
 			await deleteMemberById(accountDelete)
 			notification.success({ message: "Deleted successful!" })
@@ -58,7 +58,7 @@ const AccountPage = () => {
 		}
 		await fetchApi()
 		setIsOpenDelete(false)
-		setState(false)
+		setIsLoading(false)
 	}
 
 	const columns = [
@@ -110,9 +110,9 @@ const AccountPage = () => {
 
 	const handleAddUser = async () => {
 		setIsShowModalAddNew(false)
-		setState(true)
+		setIsLoading(true)
 		await fetchApi()
-		setState(false)
+		setIsLoading(false)
 	}
 	const handleEdit = (account: any) => {
 		setAccountEdit(account)
@@ -120,10 +120,11 @@ const AccountPage = () => {
 	}
 	const CheckboxGroup = Checkbox.Group;
 
-	const handleCloseEdit = () => {
+	const handleCloseEdit = async () => {
+		await fetchApi()
 		setIsOpenEdit(false)
+		setAccountDelete(``)
 	}
-
 	return (
 		<Spin spinning={isLoading}>
 			<section className="w-full h-full">
@@ -170,7 +171,7 @@ const AccountPage = () => {
 					Are you sure want to delete this account?
 				</Modal>
 				{/* Edit user */}
-				<EditForm open={isOpenEdit} data={accountEdit} onCancel={handleCloseEdit}></EditForm>
+				{isOpenEdit && <EditForm open={isOpenEdit} data={accountEdit} onCancel={handleCloseEdit}></EditForm>}
 			</section>
 		</Spin>
 	)

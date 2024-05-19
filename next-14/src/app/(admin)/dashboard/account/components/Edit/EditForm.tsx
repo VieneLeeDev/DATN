@@ -1,43 +1,116 @@
-import { Button, Form, Modal, Tabs } from 'antd';
-import React from 'react';
-import NameUser from './NameUser';
-import PassWorkEdit from './PassWorkEdit';
-import Advance from './Advance';
+import { Button, Checkbox, Form, Input, Modal, Select, Space, Spin, Tabs, notification } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { updateMemberById } from '../../actions';
+
 
 const EditForm = (props: any) => {
 	const { open, onCancel, data } = props;
 	const [form] = Form.useForm();
-	const handleEditUser = (values: any) => {
-		console.log('Form values:', values);
-		onCancel(); // Close the modal after form submission
+	const [newRole, setNewRole] = useState()
+	const [newStatus, setNewStatus] = useState()
+	const [passWordDisable, setPassWordDisable] = useState(false)
+	const [dataForm, setDataForm] = useState(data)
+	const [isLoading, setIsLoading] = useState(false)
+	const handleSubmitEditUser = async (values: any) => {
+		setIsLoading(true)
+		const resultUpdate = await updateMemberById(data.member.id, values)
+		if (resultUpdate.error?.mesage) {
+			notification.error({ message: resultUpdate.error?.mesage })
+		}
+		else {
+			notification.success({ message: resultUpdate.data?.mesage })
+		}
+		await onCancel(); 
 		form.resetFields()
+		setIsLoading(false)
 	};
 
-	const items = [
-		{
-			key: '1',
-			label: 'Display Name',
-			children: <NameUser form={form} oldName={data.member?.name || ''} />,
-		},
-		{
-			key: '2',
-			label: 'Password',
-			children: <PassWorkEdit form={form} />,
-		},
-		{
-			key: '3',
-			label: 'Advance',
-			children: <Advance form={form} role={data.role} status={data.status} />,
-		},
-	];
+	const roleList = [{ value: 'admin', label: <span>Admin</span> }, { value: 'user', label: <span>User</span> }]
+	const statusList = [{ value: 'active', label: <span>Active</span> }, { value: 'resigned', label: <span>Resigned</span> }]
 
+	const initValueForm = {
+		role: data.role,
+		status: data.status,
+		name: data.member?.name,
+		email: data.member?.email
+	}
+	const closeButton = () => {
+		form.resetFields()
+		onCancel()
+	}
 	return (
-		<Modal title="Edit member" open={open} onCancel={onCancel} footer={null}>
+		<Modal title="Edit member" open={open} onCancel={closeButton} footer={null}>
 			<span className='text-[#787a7b]'>{`Make changes and Click "update" to save it!`}</span>
-			<Form form={form} onFinish={handleEditUser} initialValues={{ role: data.role, status: data.status }} >
-				<Tabs defaultActiveKey="1" items={items} />
-				<Button style={{ backgroundColor: "#1677ff", color: 'white' }} htmlType='submit' className='w-full my-3'>Update</Button>
-			</Form>
+			<Spin spinning={isLoading}>
+				<Form
+					form={form}
+					initialValues={initValueForm}
+					onFinish={handleSubmitEditUser} layout="vertical" style={{ width: "100%", maxWidth: "500px", margin: "0 auto" }}>
+					<Form.Item name={'email'} label='Email:' >
+						<Input ></Input>
+					</Form.Item>
+					<Form.Item name={'name'} label='Username:' >
+						<Input ></Input>
+					</Form.Item>
+					<Form.Item name={'role'} label='Roles:' >
+						<Select options={roleList} >
+						</Select>
+					</Form.Item>
+					<Form.Item name={'status'} label='Status:'>
+						<Select options={statusList} >
+						</Select>
+					</Form.Item>
+					<Checkbox
+						checked={passWordDisable}
+						onChange={(e) => setPassWordDisable(e.target.checked)}
+					>
+						Reset Password
+					</Checkbox>
+					<Form.Item
+						name="password_reset"
+						label="Password"
+						required={passWordDisable}
+						rules={[
+							{
+								required: passWordDisable,
+								message: 'Please input your password!',
+							}, {
+								min: 6,
+								message: 'Password must be at least 6 characters long!'
+							}
+						]}
+					>
+						<Input.Password disabled={!passWordDisable} />
+					</Form.Item>
+					<Form.Item
+						name="confirm"
+						label="Confirm Password"
+						dependencies={['password_reset']}
+						required={passWordDisable}
+						rules={[
+							{
+								required: passWordDisable,
+								message: 'Please confirm your password!',
+							},
+							({ getFieldValue }) => ({
+								validator(_, value) {
+									if (!value || getFieldValue('password_reset') === value) {
+										return Promise.resolve();
+									}
+									return Promise.reject(new Error('The new password that you entered do not match!'));
+								},
+							}),
+						]}
+					>
+						<Input.Password disabled={!passWordDisable} />
+					</Form.Item>
+					<Space className="w-full flex justify-center" >
+						<Button className="text-white bg-blue-600 hover:none" type="primary" htmlType="submit">
+							Update
+						</Button>
+					</Space>
+				</Form>
+			</Spin>
 		</Modal>
 	);
 };
