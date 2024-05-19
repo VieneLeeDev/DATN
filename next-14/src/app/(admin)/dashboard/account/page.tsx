@@ -16,6 +16,7 @@ const AccountPage = () => {
 	const [isShowModalAddNew, setIsShowModalAddNew] = useState(false)
 	const [isShowModalEdit, setIsShowModalEdit] = useState(false)
 	const [dataSource, setDataSource] = useState<any[]>([])
+	const [dataTable, setDataTable] = useState<any[]>(dataSource)
 	const [isOpenDelete, setIsOpenDelete] = useState<boolean>(false)
 	const [isOpenEdit, setIsOpenEdit] = useState<boolean>(false)
 	const [accountDelete, setAccountDelete] = useState<string>(``)
@@ -33,6 +34,7 @@ const AccountPage = () => {
 			const numberAdmin = members.filter((account) => account.role === 'admin')
 			const numberUser = members.filter((account) => account.role === 'user')
 			setDataSource(data)
+			setDataTable(data)
 			setCounterRole({ admin: numberAdmin.length, user: numberUser.length })
 		}
 		setIsLoading(false)
@@ -95,6 +97,7 @@ const AccountPage = () => {
 		},
 	];
 
+
 	const rolesOptions = ['Admin', 'User'];
 
 	const checkAll = rolesOptions.length === checkedList.length;
@@ -125,6 +128,27 @@ const AccountPage = () => {
 		setIsOpenEdit(false)
 		setAccountDelete(``)
 	}
+
+	useEffect(() => {
+		const dataAdmin = dataSource.filter((account) => account.role === 'admin')
+		const dataUser = dataSource.filter((account) => account.role === 'user')
+		const isAdmin = checkedList.find((role) => role === 'Admin')
+		const isUser = checkedList.find((role) => role === 'User')
+		if (checkedList.length === 2) {
+			setDataTable(dataSource)
+		}
+		else {
+			if (isAdmin && !isUser) {
+				setDataTable(dataAdmin)
+			}
+			else if (!isAdmin && isUser) {
+				setDataTable(dataUser)
+			}
+			else if (!isAdmin && !isUser) {
+				setDataTable([])
+			}
+		}
+	}, [checkedList])
 	return (
 		<Spin spinning={isLoading}>
 			<section className="w-full h-full">
@@ -155,7 +179,7 @@ const AccountPage = () => {
 					</div>
 					<Button onClick={() => setIsShowModalAddNew(true)}>Create User</Button>
 				</div>
-				<Table scroll={{ x: 1300 }} className='border-[1px] my-5' dataSource={dataSource} columns={columns} />
+				<Table scroll={{ x: 1300 }} className='border-[1px] my-5' dataSource={dataTable} columns={columns} />
 				<Modal
 					title={"Create New User"}
 					width={760}
