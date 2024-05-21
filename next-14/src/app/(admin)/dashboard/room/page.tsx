@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Col, Drawer, Form, Input, Row, Space, UploadFile, GetProp, UploadProps, Spin, notification } from "antd";
+import { Button, Col, Drawer, Form, Input, Row, Space, UploadFile, GetProp, UploadProps, Spin, notification, InputNumber } from "antd";
 import { SearchProps } from "antd/es/input";
 import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { useState } from "react";
@@ -68,9 +68,8 @@ const DrawerRoom = (props: any) => {
 							<Form.Item
 								name="id"
 								label="Room No.: "
-								rules={[{ required: true, message: 'Please enter Room No.' }]}
 							>
-								<Input placeholder="Please enter Room No." />
+								<Input disabled />
 							</Form.Item>
 						</Col>
 					</Row>
@@ -90,9 +89,21 @@ const DrawerRoom = (props: any) => {
 							<Form.Item
 								name="guest"
 								label="Guest: "
-								rules={[{ required: true, message: 'Please enter number of Guest' }]}
+								rules={[{ required: true, message: 'Please enter number of Guest' }, {
+									type: 'number',
+									min: 1,
+									message: 'Please enter a number greater than or equal to 1',
+									transform: (value) => {
+										if (value === '') return undefined; // Bỏ qua giá trị rỗng
+										const intValue = parseInt(value, 10); // Chuyển đổi thành số nguyên
+										if (isNaN(intValue)) return undefined; // Bỏ qua nếu không phải là số
+										return intValue;
+									},
+								},]}
+
 							>
 								<Input type='number' placeholder="Please enter number of Guest" />
+
 							</Form.Item>
 						</Col>
 					</Row>
@@ -152,12 +163,25 @@ const DrawerRoom = (props: any) => {
 							<Form.Item
 								name="guest"
 								label="Guest: "
-								rules={[{ required: true, message: 'Please enter number of Guest' }]}
+								rules={[{ required: true, message: 'Please enter number of Guest' }, {
+									type: 'number',
+									min: 1,
+									message: 'Please enter a number greater than or equal to 1',
+									transform: (value) => {
+										if (value === '') return undefined; // Bỏ qua giá trị rỗng
+										const intValue = parseInt(value, 10); // Chuyển đổi thành số nguyên
+										if (isNaN(intValue)) return undefined; // Bỏ qua nếu không phải là số
+										return intValue;
+									},
+								},]}
+
 							>
 								<Input type='number' placeholder="Please enter number of Guest" />
+
 							</Form.Item>
 						</Col>
 					</Row>
+
 					<Row gutter={16}>
 						<Col span={24}>
 							<Form.Item

@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useSearchParams, useRouter } from "next/navigation";
 // import { useRouter } from 'next/router';
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 import { inject, observer } from "mobx-react";
 import Image from "next/image";
@@ -256,7 +257,10 @@ const DetailRoom = inject("appStore")(
 									</span>{" "}
 									for {dataInBill.checkIn !== "" && count} days
 								</p>
-								<Button onClick={handleOrder}>Order</Button>
+								{/* <Button onClick={handleOrder}>Order</Button> */}
+								<PayPalScriptProvider options={{ clientId: "test" }}>
+									<PayPalButtons style={{ layout: "horizontal" }} />
+								</PayPalScriptProvider>
 							</div>
 						</div>
 					</div>

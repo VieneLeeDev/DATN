@@ -89,7 +89,7 @@ export const Header = () => {
 						>
 							Sign in
 						</Link> : <div className="flex items-center justify-center cursor-pointer h-full min-w-[130px]">
-							<Dropdown menu={{
+							<Dropdown trigger={['click']} menu={{
 								items: [
 									{ label: 'List booking', key: 'sub1', icon: <ProfileFilled />, onClick: handleViewListBooking },
 									{ label: 'Logout', key: 'sub2', icon: <LogoutOutlined />, onClick: handleSignOUt }
