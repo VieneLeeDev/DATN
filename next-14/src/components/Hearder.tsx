@@ -96,12 +96,13 @@ export const Header = () => {
 								]
 							}}
 								placement="bottom">
-								<div className="flex items-center justify-between w-full h-full px-2 space-x-2">
+								<div className="flex items-center justify-between w-full h-full px-2 space-x-2 bg-slate-200 p-1 rounded-md">
 									<Avatar
+										className="bg-slate-200"
 										icon={
 											<Image
 												preview={false}
-												src="https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png"
+												src="https://www.svgrepo.com/show/526700/user-circle.svg"
 												className="w-full h-full "
 											/>
 										}

@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["svgr.d.ts","video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/supabaseClient.js", "src/utils/supabaseClient.js","src/middleware.ts"],
+  "include": ["svgr.d.ts","video.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/config/supabaseClient.js", "src/utils/supabaseClient.js","src/middleware.ts", "src/app/(guest)/detail-room/components/PaymentForm/PaymentForm.tsx", "src/app/api/paypal/route.js"],
   "exclude": ["node_modules"]
 }

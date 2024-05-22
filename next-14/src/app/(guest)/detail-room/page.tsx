@@ -1,6 +1,6 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
-import { DatePicker, Modal, notification } from "antd";
+import { DatePicker, Modal, Spin, notification } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -15,12 +15,16 @@ import { RoomStore } from "@/stores/room.store";
 import { toJS } from "mobx";
 import Router, { withRouter } from 'next/router'
 import Button from "@/components/Button";
+import PaymentForm from "./components/PaymentForm/PaymentForm";
 dayjs.extend(customParseFormat);
 
 const DetailRoom = inject("appStore")(
 	observer(({ appStore }: { appStore?: any }) => {
 		const [count, setCount] = useState(1);
 		const [reload, setReload] = useState(false);
+		const [isLoading, setIsloading] = useState(false)
+		const [availableBill, setAvailableBill] = useState(false)
+		const [openPayment, setOpenPayment] = useState(false)
 		const [dataInBill, setDataInBill] = useState({
 			checkIn: "",
 			checkOut: "",
@@ -36,6 +40,7 @@ const DetailRoom = inject("appStore")(
 		const roomId = params.get('id')
 
 		const initDetailPage = async () => {
+			setIsloading(true)
 			let { data } = await supabase.from('room').select().eq('id', roomId)
 			const result = data?.shift()
 			setDetailRoom({ ...result })
@@ -50,18 +55,8 @@ const DetailRoom = inject("appStore")(
 					checkOut: dataInSearch.checkOut,
 				});
 			handleCountDays(dataInSearch.checkIn, dataInSearch.checkOut);
+			setIsloading(false)
 		}
-
-		const searchParams = useSearchParams()
-		const createQueryString = useCallback(
-			(name: string, value: string) => {
-				const params = new URLSearchParams(searchParams.toString())
-				params.set(name, value)
-
-				return params.toString()
-			},
-			[searchParams]
-		)
 
 		useEffect(() => {
 			initDetailPage()
@@ -112,21 +107,24 @@ const DetailRoom = inject("appStore")(
 			appStore.setDuration(dataInBill.checkIn, dataInBill.checkOut)
 			const checkListAvailable = appStore.room.itemsFiltered.find((room: any) => room.id === detailRoom.id)
 			if (!checkListAvailable) {
-				notification.error({ message: "Phòng đã được book trong thời gian này, vui lòng thay đổi lịch!" });
+				notification.error({ message: "Room is booked during this time, please change the schedule!" });
 			}
 			else {
-				const dataBooking: any = {
-					room_id: detailRoom?.id,
-					from: dataInBill.checkIn,
-					to: dataInBill.checkOut,
-					total_price: detailRoom?.price * count,
-				};
-				router.push(`/payment?${createQueryString('room_id', dataBooking.room_id)}&${createQueryString('from', dataBooking.from)}&${createQueryString('to', dataBooking.to)}&${createQueryString('total_price', dataBooking.total_price)}`)
-				// await appStore.booking.create(dataBooking);
-				// await appStore.resetFilter();
-				// window.location.href = "/received";
-				// router.push({ pathname: '/payment', query: { dataBooking: { ...dataBooking } } })
+				setAvailableBill(true)
+				setOpenPayment(true)
 			}
+		}
+
+		const resetStore = async () => {
+			const dataBooking: any = {
+				room_id: detailRoom?.id,
+				from: dataInBill.checkIn,
+				to: dataInBill.checkOut,
+				total_price: detailRoom?.price * count,
+			};
+			await appStore.booking.create(dataBooking);
+			await appStore.resetFilter();
+			setOpenPayment(false)
 		}
 
 		// set default value for datePicker in detail products
@@ -139,133 +137,135 @@ const DetailRoom = inject("appStore")(
 				? dayjs()
 				: dayjs(`${dataInSearch.checkOut}`);
 
-		const handleOrder = async () => {
-			const { data: activeSession } = await supabase.auth.getSession();
-			if (!activeSession.session) {
-				router.push(`/login`);
-			} else {
-				const dataBooking: any = {
-					room_id: detailRoom?.id,
-					from: dataInBill.checkIn,
-					to: dataInBill.checkOut,
-					total_price: detailRoom?.price * count,
-				};
-				// await appStore.booking.create(dataBooking);
-				await appStore.payment.add(dataBooking)
-				// await appStore.resetFilter();
-				// window.location.href = "/received";
-			}
-		};
+		// const handleOrder = async () => {
+		// 	const { data: activeSession } = await supabase.auth.getSession();
+		// 	if (!activeSession.session) {
+		// 		router.push(`/login`);
+		// 	} else {
+		// 		const dataBooking: any = {
+		// 			room_id: detailRoom?.id,
+		// 			from: dataInBill.checkIn,
+		// 			to: dataInBill.checkOut,
+		// 			total_price: detailRoom?.price * count,
+		// 		};
+		// 		// await appStore.booking.create(dataBooking);
+		// 		await appStore.payment.add(dataBooking)
+		// 		// await appStore.resetFilter();
+		// 		// window.location.href = "/received";
+		// 	}
+		// };
 
 		return (
-			<div className="container flex flex-col h-full justify-center items-center lg:py-[30px]">
-				<div className="flex flex-col h-1/2 justify-center items-center lg:py-[20px">
-					<h1 className="text-2xl md:text-4xl font-bold mb-10">
-						{detailRoom?.id}
-					</h1>
-					<p className="text-center md:max-w-1/3 break-words">
-						The Mountain Room is available with either double or single beds.
-						Designed in an open-concept living area, it comes with oversized
-						windows and lots of in-room facilities.
-					</p>
-				</div>
-				<hr className="container my-10" />
-				<div className="container relative h-[400px] bg-slate-100 flex justify-center items-center">
-					{detailRoom && <img
-						className="object-cover object-center w-full h-full"
-						alt="pic"
-						src={detailRoom?.image_url}
-					/>}
-				</div>
-				<hr className="container my-10" />
-				<div className="container flex flex-col md:flex-row ">
-					<div className="flex-[2]">
-						{/**Detail */}
-						<div className="flex-col lg:flex-row flex container min-h-[300px] border-[1px] p-5 lg:justify-between">
-							<h2 className="flex-[1] text-center text-2xl font-bold">
-								Details
-							</h2>
-							<div className="flex-[3] h-1/3 border-t-[1px] lg:h-full lg:px-10 lg:border-l-[1px] lg:border-t-0">
-								<ul>
-									<li className="flex my-5 break-words">
-										<span className="text-[#767b80] w-1/4">Guest:</span>
-										<span className="w-3/4">{detailRoom?.guest}</span>
-									</li>
-									<li className="flex my-5 break-words">
-										<span className="text-[#767b80] w-1/4">Size:</span>
-										<span className="w-3/4"> {detailRoom?.size}</span>
-									</li>
-									<li className="flex my-5 break-words">
-										<span className="text-[#767b80] w-1/4">Location:</span>
-										<span className="w-3/4">location</span>
-									</li>
-								</ul>
+			<Spin spinning={isLoading}>
+				<div className="container flex flex-col h-full justify-center items-center lg:py-[30px]">
+					<div className="flex flex-col h-1/2 justify-center items-center lg:py-[20px">
+						<h1 className="text-2xl md:text-4xl font-bold mb-10">
+							{detailRoom?.id}
+						</h1>
+						<p className="text-center md:max-w-1/3 break-words">
+							The Mountain Room is available with either double or single beds.
+							Designed in an open-concept living area, it comes with oversized
+							windows and lots of in-room facilities.
+						</p>
+					</div>
+					<hr className="container my-10" />
+					<div className="container relative h-[400px] bg-slate-100 flex justify-center items-center">
+						{detailRoom && <img
+							className="object-cover object-center w-full h-full"
+							alt="pic"
+							src={detailRoom?.image_url}
+						/>}
+					</div>
+					<hr className="container my-10" />
+					<div className="container flex flex-col md:flex-row ">
+						<div className="flex-[2]">
+							{/**Detail */}
+							<div className="flex-col lg:flex-row flex container min-h-[300px] border-[1px] p-5 lg:justify-between">
+								<h2 className="flex-[1] text-center text-2xl font-bold">
+									Details
+								</h2>
+								<div className="flex-[3] h-1/3 border-t-[1px] lg:h-full lg:px-10 lg:border-l-[1px] lg:border-t-0">
+									<ul>
+										<li className="flex my-5 break-words">
+											<span className="text-[#767b80] w-1/4">Guest:</span>
+											<span className="w-3/4">{detailRoom?.guest}</span>
+										</li>
+										<li className="flex my-5 break-words">
+											<span className="text-[#767b80] w-1/4">Size:</span>
+											<span className="w-3/4"> {detailRoom?.size}</span>
+										</li>
+										<li className="flex my-5 break-words">
+											<span className="text-[#767b80] w-1/4">Location:</span>
+											<span className="w-3/4">location</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						{/*Bill */}
+						<div className="flex flex-1 justify-center container min-h-[700px] lg:ml-10">
+							<div className="flex flex-1 flex-col min-h-[300px] max-h-[600px] border-[1px] p-5 justify-between">
+								<div className="flex flex-col justify-center h-1/4 max-h-[100px]">
+									<p className="text-xl">
+										<span className="text-2xl">
+											<strong>€{detailRoom?.price}</strong>
+										</span>{" "}
+										per Day
+									</p>
+								</div>
+								<hr />
+								<div className="h-3/4 flex flex-col justify-between">
+									<div className="flex flex-col my-5 ">
+										<p className="text-sm font-semibold">Check-in Date*</p>
+										{
+											<DatePicker
+												disabledDate={ValidateCheckIn}
+												defaultValue={defaultValueCheckin}
+												size="large"
+												format="YYYY-MM-DD"
+												onChange={(obj, value) => onChangeDateCheckIn(value)}
+												allowClear={false}
+											/>
+										}
+									</div>
+									<div className="flex flex-col my-5 ">
+										<p className="text-sm font-semibold">Check-out Date*</p>
+										{
+											<DatePicker
+												disabledDate={ValidateCheckOut}
+												defaultValue={defaultValueCheckOut}
+												value={dayjs(`${dataInBill.checkOut}`)}
+												size="large"
+												format="YYYY-MM-DD"
+												onChange={(obj, value) => onChangeDateCheckOut(value)}
+												picker="date"
+												allowClear={false}
+											/>
+										}
+									</div>
+									<div className="my-5 break-word">
+										{/* <p className="text-red-500">message error</p> */}
+									</div>
+									<p className="text-xl my-5">
+										<span className="text-2xl">
+											<strong>
+												€
+												{`${dataInBill.checkIn !== ""
+													? detailRoom && detailRoom?.price * count
+													: detailRoom?.price
+													}`}
+											</strong>
+										</span>{" "}
+										for {dataInBill.checkIn !== "" && count} days
+									</p>
+									<Button onClick={checkAvailableDuration}>Order</Button>
+									{openPayment && availableBill && <PaymentForm resetStore={resetStore} dataInBill={dataInBill} availableBill={availableBill} onClose={() => setAvailableBill(false)} roomOrder={detailRoom} price={detailRoom?.price * count} />}
+								</div>
 							</div>
 						</div>
 					</div>
-					{/*Bill */}
-					<div className="flex flex-1 justify-center container min-h-[700px] lg:ml-10">
-						<div className="flex flex-1 flex-col min-h-[300px] max-h-[600px] border-[1px] p-5 justify-between">
-							<div className="flex flex-col justify-center h-1/4 max-h-[100px]">
-								<p className="text-xl">
-									<span className="text-2xl">
-										<strong>€{detailRoom?.price}</strong>
-									</span>{" "}
-									per Day
-								</p>
-							</div>
-							<hr />
-							<div className="h-3/4 flex flex-col justify-between">
-								<div className="flex flex-col my-5 ">
-									<p className="text-sm font-semibold">Check-in Date*</p>
-									{
-										<DatePicker
-											disabledDate={ValidateCheckIn}
-											defaultValue={defaultValueCheckin}
-											size="large"
-											format="YYYY-MM-DD"
-											onChange={(obj, value) => onChangeDateCheckIn(value)}
-										/>
-									}
-								</div>
-								<div className="flex flex-col my-5 ">
-									<p className="text-sm font-semibold">Check-out Date*</p>
-									{
-										<DatePicker
-											disabledDate={ValidateCheckOut}
-											defaultValue={defaultValueCheckOut}
-											value={dayjs(`${dataInBill.checkOut}`)}
-											size="large"
-											format="YYYY-MM-DD"
-											onChange={(obj, value) => onChangeDateCheckOut(value)}
-											picker="date"
-										/>
-									}
-								</div>
-								<div className="my-5 break-word">
-									{/* <p className="text-red-500">message error</p> */}
-								</div>
-								<p className="text-xl my-5">
-									<span className="text-2xl">
-										<strong>
-											€
-											{`${dataInBill.checkIn !== ""
-												? detailRoom && detailRoom?.price * count
-												: detailRoom?.price
-												}`}
-										</strong>
-									</span>{" "}
-									for {dataInBill.checkIn !== "" && count} days
-								</p>
-								{/* <Button onClick={handleOrder}>Order</Button> */}
-								<PayPalScriptProvider options={{ clientId: "test" }}>
-									<PayPalButtons style={{ layout: "horizontal" }} />
-								</PayPalScriptProvider>
-							</div>
-						</div>
-					</div>
 				</div>
-			</div>
+			</Spin>
 		);
 	})
 );
