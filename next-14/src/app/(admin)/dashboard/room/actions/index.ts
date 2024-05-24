@@ -29,7 +29,6 @@ export async function updateRoom(data: any) {
 
 export async function deleteRoom(id: string) {
 	const resultDelete = await supabase.from('room').delete().eq('id', id)
-	console.log(resultDelete)
 	if (resultDelete.error?.message) {
 		return { data: null, error: { message: resultDelete.error?.message } }
 	}

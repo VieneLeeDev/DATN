@@ -29,7 +29,7 @@ const DetailRoom = inject("appStore")(
 			checkIn: "",
 			checkOut: "",
 		});
-		const [detailRoom, setDetailRoom] = useState({ id: "", price: 0, image_url: '', size: '', guest: '' })
+		const [detailRoom, setDetailRoom] = useState({ id: "", price: 0, image_url: '', size: '', guest: '', description: "" })
 		const dataInSearch = {
 			checkIn: appStore.filter.filter_from,
 			checkOut: appStore.filter.filter_to,
@@ -103,15 +103,21 @@ const DetailRoom = inject("appStore")(
 			return dayjs(value).isBefore(dayjs(`${dataInBill.checkIn}`));
 		};
 
-		const checkAvailableDuration = () => {
-			appStore.setDuration(dataInBill.checkIn, dataInBill.checkOut)
-			const checkListAvailable = appStore.room.itemsFiltered.find((room: any) => room.id === detailRoom.id)
-			if (!checkListAvailable) {
-				notification.error({ message: "Room is booked during this time, please change the schedule!" });
+		const checkAvailableDuration = async () => {
+			const { data: activeSession } = await supabase.auth.getSession();
+			if (!activeSession.session) {
+				router.push(`/login`);
 			}
 			else {
-				setAvailableBill(true)
-				setOpenPayment(true)
+				appStore.setDuration(dataInBill.checkIn, dataInBill.checkOut)
+				const checkListAvailable = appStore.room.itemsFiltered.find((room: any) => room.id === detailRoom.id)
+				if (!checkListAvailable) {
+					notification.error({ message: "Room is booked during this time, please change the schedule!" });
+				}
+				else {
+					setAvailableBill(true)
+					setOpenPayment(true)
+				}
 			}
 		}
 
@@ -196,7 +202,11 @@ const DetailRoom = inject("appStore")(
 										</li>
 										<li className="flex my-5 break-words">
 											<span className="text-[#767b80] w-1/4">Location:</span>
-											<span className="w-3/4">location</span>
+											<span className="w-3/4">Da Nang</span>
+										</li>
+										<li className="flex my-5 break-words">
+											<span className="text-[#767b80] w-1/4">Description:</span>
+											<span className="w-3/4">{detailRoom?.description}</span>
 										</li>
 									</ul>
 								</div>

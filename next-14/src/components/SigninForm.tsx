@@ -36,11 +36,6 @@ export default function SigninForm() {
 		});
 	};
 
-	const handleSignInWithFacebook = async () => {
-		const { data, error } = await supabase.auth.signInWithOAuth({
-			provider: "facebook",
-		});
-	};
 
 
 	return (
@@ -80,9 +75,6 @@ export default function SigninForm() {
 						<p className="text-xl">Login</p>
 					</button>
 				</div>
-				<div className="flex justify-center items-center w-full h-[50px] bg-black rounded-lg text-white">
-					<p className="text-xl">Forgot password</p>
-				</div>
 				{/* social button*/}
 				<div className="flex justify-center items-center w-full h-[50px] space-x-5">
 					<button
@@ -96,18 +88,8 @@ export default function SigninForm() {
 						/>
 					</button>
 					<button
-						onClick={handleSignInWithFacebook}
-						className="w-[50px] h-[50px]"
-					>
-						<img
-							src={`../../../facebook.svg`}
-							className="w-full h-full"
-							alt="google"
-						/>
-					</button>
-					<button
 						onClick={handleSignInWithGoogle}
-						className="w-[50px] h-[50px]"
+						className="w-[50px] h-[50px] bg-slate-200 rounded-md"
 					>
 						<img
 							src={`../../../google.svg`}

@@ -31,6 +31,9 @@ export const Header = () => {
 			notification.error({ message: `${error}` });
 		}
 	};
+	const handleViewProfiles = () => {
+		window.location.href = "/profiles"
+	}
 
 	const handleViewListBooking = () => {
 		window.location.href = "/received"
@@ -91,8 +94,9 @@ export const Header = () => {
 						</Link> : <div className="flex items-center justify-center cursor-pointer h-full min-w-[130px]">
 							<Dropdown trigger={['click']} menu={{
 								items: [
-									{ label: 'List booking', key: 'sub1', icon: <ProfileFilled />, onClick: handleViewListBooking },
-									{ label: 'Logout', key: 'sub2', icon: <LogoutOutlined />, onClick: handleSignOUt }
+									{ label: 'Profiles', key: 'sub1', icon: <ProfileFilled />, onClick: handleViewProfiles },
+									{ label: 'List booking', key: 'sub2', icon: <ProfileFilled />, onClick: handleViewListBooking },
+									{ label: 'Logout', key: 'sub3', icon: <LogoutOutlined />, onClick: handleSignOUt }
 								]
 							}}
 								placement="bottom">

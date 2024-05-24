@@ -69,11 +69,9 @@ const PaymentForm = (props) => {
 								}),
 							})
 							const order = await res.json();
-							console.log(order);
 							return order.id;
 						}}
 						onApprove={async (data, actions) => {
-							console.log("Approved:", data);
 							actions.order.capture();
 							await resetStore()
 							notification.success({ message: "booking thanh cong" })

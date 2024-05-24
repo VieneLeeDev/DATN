@@ -121,12 +121,14 @@ const DrawerRoom = (props: any) => {
 					<Form.Item
 						name="image_url"
 						label="Image: "
+						required
 					>
 						<TextArea rows={2} />
 					</Form.Item>
 					<Form.Item
 						name="description"
 						label="Description: "
+						required
 					>
 						<TextArea rows={5} />
 					</Form.Item>
@@ -196,12 +198,14 @@ const DrawerRoom = (props: any) => {
 					<Form.Item
 						name="image_url"
 						label="Image: "
+						required
 					>
 						<TextArea rows={2} />
 					</Form.Item>
 					<Form.Item
 						name="description"
 						label="Description: "
+						required
 					>
 						<TextArea rows={5} />
 					</Form.Item>

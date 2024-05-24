@@ -8,15 +8,6 @@ import { Spin } from "antd";
 const Received = inject("appStore")(
 	observer(({ appStore }: { appStore?: any }) => {
 		const [isLoading, setIsLoading] = useState(false)
-
-		// useEffect(() => {
-		// 	if (appStore.booking.items) {
-		// 		setIsLoading(true)
-		// 	}
-		// 	else {
-		// 		setIsLoading(false)
-		// 	}
-		// }, [appStore.booking.items])
 		return (
 			<Spin spinning={isLoading}>
 				<div className="flex flex-col container ">

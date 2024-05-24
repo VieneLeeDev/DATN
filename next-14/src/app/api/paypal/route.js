@@ -26,7 +26,6 @@ export async function POST(requestparam) {
 
 	try {
 		const response = await client.execute(request);
-		console.log('PayPal response:', response); // Log to check response from PayPal
 		return NextResponse.json({
 			id: response.result.id
 		});
