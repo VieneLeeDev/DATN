@@ -5,7 +5,7 @@ const withSvgr = require('next-plugin-svgr');
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	pageExtensions: ['ts', 'tsx', 'mdx'],
-	output: 'export',
+	output: 'standalone',
 	trailingSlash: true, 
 	images: {
 		unoptimized: true,
