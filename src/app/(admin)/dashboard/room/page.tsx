@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { Button, Col, Drawer, Form, Input, Row, Space, UploadFile, GetProp, UploadProps, Spin, notification, InputNumber } from "antd";
 import { SearchProps } from "antd/es/input";
