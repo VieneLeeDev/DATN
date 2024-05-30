@@ -5,7 +5,6 @@ import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { supabase } from '@/utils/supabaseClient';
 import UpdateProfile from './components/update';
-import Uploader from '@/components/Uploader';
 
 const props: UploadProps = {
 	name: 'file',
@@ -84,7 +83,6 @@ const Profile = () => {
 						</div>
 						<div className='w-1/3 h-full flex flex-col'>
 							<div className='w-full h-[350px] bg-slate-200'> </div>
-							<Uploader />
 							<Button onClick={() => document.getElementById('upload-trigger')?.click()}>Upload Avatar</Button>
 						</div>
 					</section>
