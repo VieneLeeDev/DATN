@@ -1,19 +1,23 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import MenuHeader from "./MobileHeader";
 import { FiAlignJustify } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
-import { Avatar, Button, Dropdown, Image, Tooltip, notification } from "antd";
+import { Avatar, Button, Dropdown, Tooltip, notification } from "antd";
 import { authStore } from "@/stores/auth.store";
 import { ProfileFilled, LogoutOutlined } from '@ant-design/icons';
 import { appStore } from "@/stores";
-
+import cloud_icon from '../../public/02d.svg'
+import tick_icon from '../../public/tick.svg'
+import lang_icon from '../../public/language.svg'
+import Image from "next/image";
+import dayjs from "dayjs";
 export const Header = () => {
 	const [isShowDrawer, setIsShowDrawer] = useState(false);
 	const [userName, setUserName] = useState("")
 	const [roleUser, setRoleUser] = useState("user")
+	const [hours, setHours] = useState(dayjs().format("HH:mm A"))
 	const handleClickDrawer = () => {
 		setIsShowDrawer(true);
 	};
@@ -61,72 +65,60 @@ export const Header = () => {
 		getUserName()
 		getUserRole()
 	}
+	// useEffect(() => {
+	// 	initLayout()
+	// }, [])
+
 	useEffect(() => {
-		initLayout()
+		const intervalFunc = setInterval(() => {
+			setHours(dayjs().format("HH:mm A"))
+		}, 1000)
+		return () => clearInterval(intervalFunc)
 	}, [])
 
-	return (
-		<>
-			<div className="flex flex-col shadow-lg max-w-screen h-[70px] justify-center px-5 bg-[#fffefe]">
-				<div className="hidden md:flex md:w-full h-full items-center justify-between">
-					{/**navigation desktop*/}
-					<div className="hidden md:flex space-x-3">
-						<Link
-							href={"/"}
-							className={`text-xl flex justify-center items-center p-2 w-[150px] hover:opacity-50 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl text-white`}
-						>
-							Home
-						</Link>
-						{roleUser === 'admin' && <Link
-							href={"/dashboard"}
-							className={`text-xl flex justify-center items-center p-2 w-[150px] hover:opacity-50 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl text-white`}
-						>
-							Dashboard
-						</Link>}
-					</div>
 
-					<div className="hidden md:flex space-x-3">
-						{!authStore.isLoggin ? <Link
-							href={"/login"}
-							className="p-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl w-[150px] text-center text-white font-semibold hover:opacity-50"
-						>
-							Sign in
-						</Link> : <div className="flex items-center justify-center cursor-pointer h-full min-w-[130px]">
-							<Dropdown trigger={['click']} menu={{
-								items: [
-									{ label: 'Profiles', key: 'sub1', icon: <ProfileFilled />, onClick: handleViewProfiles },
-									{ label: 'List booking', key: 'sub2', icon: <ProfileFilled />, onClick: handleViewListBooking },
-									{ label: 'Logout', key: 'sub3', icon: <LogoutOutlined />, onClick: handleSignOUt }
-								]
-							}}
-								placement="bottom">
-								<div className="flex items-center justify-between w-full h-full px-2 space-x-2 bg-slate-200 p-1 rounded-md">
-									<Avatar
-										className="bg-slate-200"
-										icon={
-											<Image
-												preview={false}
-												src="https://www.svgrepo.com/show/526700/user-circle.svg"
-												className="w-full h-full "
-											/>
-										}
-									/>
-									<span >
-										{userName}
-									</span>
-								</div>
-							</Dropdown>
-						</div>}
-					</div>
+	return (<section className="h-[62px] w-full bg-[#1C2C34] pt-[16px] pb-[15px] box-border">
+		<section className="text-[15px] flex justify-between text-white w-full mx-auto max-w-[1650px]">
+			{/* logo */}
+			<section className="flex items-center gap-[8px] h-full ">
+				<span>Da Nang</span>
+				<Image
+					alt="Cloud SVG"
+					width={30}
+					height={30}
+					src={cloud_icon} ></Image>
+				<span>-</span>
+				<span>{hours}</span>
+			</section>
+			<section className="flex items-center gap-[8px] h-full text-[15px]">
+				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
+					<Image
+						alt="tick SVG"
+						width={25}
+						height={25}
+						src={tick_icon} ></Image>
+					<span>Terms & Condition</span>
 				</div>
-				<button
-					onClick={handleClickDrawer}
-					className="md:hidden w-[30px] h-[30px]"
-				>
-					<FiAlignJustify className="w-full h-full text-white" />
-				</button>
-			</div>
-			<MenuHeader open={isShowDrawer} close={() => setIsShowDrawer(false)} />
-		</>
-	);
+				<div className="px-[25px]">
+					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
+				</div>
+				<div className="flex h-full w-auto gap-2">
+					<span className="block text-white hover:text-hoverbtn cursor-pointer">Login</span>
+					<span className="block">/</span>
+					<span className="block text-white hover:text-hoverbtn cursor-pointer">Register</span>
+				</div>
+				<div className="px-[25px]">
+					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
+				</div>
+				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
+					<Image
+						alt="tick SVG"
+						width={25}
+						height={25}
+						src={lang_icon} ></Image>
+					<span>Languages</span>
+				</div>
+			</section>
+		</section>
+	</section>);
 };

@@ -1,57 +1,44 @@
 "use client";
 import "react-datetime/css/react-datetime.css";
-import { DatePicker } from "antd";
+import { Button, DatePicker, Select } from "antd";
 import dayjs from "dayjs";
 import type { RangePickerProps } from "antd/es/date-picker";
 import { observer } from "mobx-react-lite";
+import Separate from "./Separate";
 
 const { RangePicker } = DatePicker;
 
-const FormSearch = observer(({ appStore }: { appStore: any }) => {
-	const handleChangeDate = (obj: any, value: any) => {
-		appStore.setDuration(value[0], value[1]);
-	};
+const FormSearch = observer((props: any) => {
+	// const handleChangeDate = (obj: any, value: any) => {
+	// 	appStore.setDuration(value[0], value[1]);
+	// };
 
-	// validate datepicker
-	const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-		return current && current < dayjs().startOf("day");
-	};
+	// // validate datepicker
+	// const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+	// 	return current && current < dayjs().startOf("day");
+	// };
 
 	return (
-		<div className="text-[#909090] hidden container xl:flex xl:mx-auto h-[75px] w-full justify-center" >
-			<div className="w-2/3 h-full">
-				<h3 className="h-1/3 font-bold "> Check-in & Check-out</h3>
-				<div className="w-full h-2/3 ">
-					<RangePicker
-						className="w-full h-full rounded-none "
-						disabledDate={disabledDate}
-						onChange={(obj, value) => handleChangeDate(obj, value)}
-						format="YYYY-MM-DD"
-					/>
-				</div>
+		<div className="relative hidden container xl:flex xl:mx-auto h-[150px] w-full bg-white rounded-xl px-[50px] py-[34px] items-center border-b-[1px]">
+			<div className="flex flex-col w-1/4 ">
+				<span className="text-hoverbtn font-bold uppercase">Check-in:</span>
+				<DatePicker popupClassName={"absolute z-[2000]"} className="w-full my-2 h-[50px]" format={'DD MM YYYY'} />
 			</div>
-			<div className="flex flex-1 justify-between">
-				<div className="flex-1">
-					<h3 className="h-1/3 font-bold px-3"> Guest</h3>
-					<div className="w-full h-2/3 px-3 bg-white ">
-						<select
-							className="w-full h-full border-[1px] bg-white"
-							value={appStore.filter?.filter_guests}
-							onChange={(e) => appStore.setGuests(Number(e.target.value))}
-						>
-							{appStore.room?.guestList.map((value: any) => (
-								<option key={value} value={value}>
-									{value}
-								</option>
-							))}
-						</select>
-					</div>
-				</div>
-				{/* <div className="relative flex justify-center items-center w-[150px] h-full">
-					<div className="absolute text-white font-bold text-xl flex justify-center items-center bottom-0 w-full h-2/3 bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 rounded-md hover:cursor-pointer">
-						Search
-					</div>
-				</div> */}
+			<Separate />
+			<div className="flex flex-col w-1/4 ">
+				<span className="text-hoverbtn font-bold uppercase">Check-out:</span>
+				<DatePicker popupClassName={"absolute z-[2000]"} className="w-full my-2 h-[50px]" format={'DD MM YYYY'} />
+			</div>
+			<Separate />
+			<div className="flex flex-col w-1/4">
+				<span className="text-hoverbtn font-bold uppercase">Guests:</span>
+				<Select popupClassName={"absolute z-[2000]"}  style={{height:"50px"}} ></Select>
+			</div>
+			<Separate />
+			<div className="relative h-full flex flex-col w-auto">
+				<Button className="absolute text-white bg-hoverbtn w-[150px] h-[50px] font-bold text-[24px] leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
+					Search
+				</Button>
 			</div>
 		</div>
 	);
