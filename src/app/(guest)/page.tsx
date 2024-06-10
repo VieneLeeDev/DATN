@@ -2,10 +2,10 @@
 
 import { observer } from "mobx-react-lite";
 import { inject } from "mobx-react";
-import banner from "../../../public/banner.webp"
+import banner from "@/assets/banner.webp"
 import Image from "next/image";
 import FormSearch from "@/components/FormSearch";
-import room_banner from '../../../public/h1-ab3.webp'
+import room_banner from '@/assets/h1-ab3.webp'
 import AddressMap from "@/components/AddressMap";
 const HomePage = inject("appStore")(
 	observer(({ appStore }: { appStore?: any }) => {
@@ -32,7 +32,7 @@ const HomePage = inject("appStore")(
 					</section>
 					<section className="flex mt-[30px]">
 						<div className="w-1/2 pr-[10px]">
-							<Image src={room_banner} className="h-[500px] w-full object-cover object-center"></Image>
+							<Image src={room_banner} className="h-[500px] w-full object-cover object-center" alt="exp"></Image>
 						</div>
 						<div className="w-1/2 pl-[10px]">
 							<span className="block leading-[40px] text-[20px] font-cormorant">{`"Our mission as a premier new york hotel is to provide peace of mind, consistency and build loyalty based on the value of our relationships with guests. We strive to be unique and the place you want to come back, Aliquam porttitor sit amet diam non placerat"`}</span>

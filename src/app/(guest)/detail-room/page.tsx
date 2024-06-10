@@ -14,7 +14,6 @@ import { supabase } from "@/utils/supabaseClient";
 import { RoomStore } from "@/stores/room.store";
 import { toJS } from "mobx";
 import Router, { withRouter } from 'next/router'
-import Button from "@/components/Button";
 import PaymentForm from "./components/PaymentForm/PaymentForm";
 dayjs.extend(customParseFormat);
 
@@ -268,7 +267,6 @@ const DetailRoom = inject("appStore")(
 										</span>{" "}
 										for {dataInBill.checkIn !== "" && count} days
 									</p>
-									<Button onClick={checkAvailableDuration}>Order</Button>
 									{openPayment && availableBill && <PaymentForm resetStore={resetStore} dataInBill={dataInBill} availableBill={availableBill} onClose={() => setAvailableBill(false)} roomOrder={detailRoom} price={detailRoom?.price * count} />}
 								</div>
 							</div>

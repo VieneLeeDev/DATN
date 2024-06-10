@@ -8,9 +8,9 @@ import { Avatar, Button, Dropdown, Tooltip, notification } from "antd";
 import { authStore } from "@/stores/auth.store";
 import { ProfileFilled, LogoutOutlined } from '@ant-design/icons';
 import { appStore } from "@/stores";
-import cloud_icon from '../../public/02d.svg'
-import tick_icon from '../../public/tick.svg'
-import lang_icon from '../../public/language.svg'
+import cloud_icon from '@/assets/02d.svg'
+import tick_icon from '@/assets/tick.svg'
+import lang_icon from '@/assets/language.svg'
 import Image from "next/image";
 import dayjs from "dayjs";
 export const Header = () => {
@@ -82,21 +82,22 @@ export const Header = () => {
 			{/* logo */}
 			<section className="flex items-center gap-[8px] h-full ">
 				<span>Da Nang</span>
-				<Image
+				{/* <Image
 					alt="Cloud SVG"
 					width={30}
-					height={30}
-					src={cloud_icon} ></Image>
+					height={30} 
+					priority
+					src={'@/assets/02d.svg'} ></Image> */}
 				<span>-</span>
 				<span>{hours}</span>
 			</section>
 			<section className="flex items-center gap-[8px] h-full text-[15px]">
 				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
-					<Image
+					{/* <Image
 						alt="tick SVG"
 						width={25}
 						height={25}
-						src={tick_icon} ></Image>
+						src={tick_icon} ></Image> */}
 					<span>Terms & Condition</span>
 				</div>
 				<div className="px-[25px]">
@@ -111,11 +112,11 @@ export const Header = () => {
 					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
 				</div>
 				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
-					<Image
+					{/* <Image
 						alt="tick SVG"
 						width={25}
 						height={25}
-						src={lang_icon} ></Image>
+						src={lang_icon} ></Image> */}
 					<span>Languages</span>
 				</div>
 			</section>
