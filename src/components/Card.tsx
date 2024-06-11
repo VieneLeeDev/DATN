@@ -13,7 +13,7 @@ interface CartProps {
 
 const Card = (props: CartProps) => {
 	return (
-		<section className="container border-[2px] rounded-lg overflow-hidden hover:opacity-80 hover:cursor-pointer duration-100 h-full">
+		<section className="border-[2px] rounded-lg overflow-hidden hover:opacity-80 hover:cursor-pointer duration-100 h-full">
 			<div className="w-full h-[200px]">
 				<img className="w-full h-full object-center object-cover" src={props.img || ''} alt="pic" />
 			</div>
