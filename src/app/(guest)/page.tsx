@@ -8,6 +8,7 @@ import FormSearch from "@/components/FormSearch";
 import room_banner from '@/assets/h1-ab3.webp'
 import AddressMap from "@/components/AddressMap";
 import Roomlist from "./components/Roomlist";
+import ServiceCard from "./components/ServiceCard";
 const HomePage = inject("appStore")(
 	observer(({ appStore }: { appStore?: any }) => {
 		return (
@@ -45,7 +46,7 @@ const HomePage = inject("appStore")(
 					<Roomlist />
 				</div>
 				<div className="flex w-full h-auto p-[30px]">
-					
+					<ServiceCard />
 				</div>
 				<div className="flex w-full h-[500px] bg-[#F1EFED] p-[30px]">
 					<div className="w-1/2 h-full py-[30px] px-[50px]">
