@@ -3,8 +3,8 @@ import React from 'react'
 
 const ServiceCard = () => {
 	return (
-		<section className=' flex gap-5 w-full h-[400px]'>
-			<div className='flex flex-col gap-5 w-1/3 h-full border-[1px]'>
+		<section className='flex flex-col md:flex-row gap-5 w-full lg:h-[400px]'>
+			<div className='flex flex-col gap-5 w-full md:w-1/3 h-full border-[1px]'>
 				<div className={`flex items-center justify-center bg-[#AA998A] w-1/4 min-w-[100px] h-[100px] mx-auto`}>
 					<Image
 						width={60}
@@ -20,7 +20,7 @@ const ServiceCard = () => {
 					The wellbeing of our guests and staff is of paramount importance. Our Covid-19 strategy includes deep cleaning rooms between guests and leaving rooms vacant for at least 24 hours for safety
 				</p>
 			</div>
-			<div className='flex flex-col gap-5 w-1/3 h-full border-[1px]'>
+			<div className='flex flex-col gap-5 w-full md:w-1/3 h-full border-[1px]'>
 				<div className={`flex items-center justify-center bg-[#AA998A] w-1/4 min-w-[100px] h-[100px] mx-auto`}>
 					<Image
 						width={60}
@@ -35,7 +35,7 @@ const ServiceCard = () => {
 				<p className='px-[20px] text-center text-[#777777]'>
 					We understand that sometimes things do not go to plan. You can book your stay with confidence with our 24 hour cancellation policy. Cancellations are available on bookings up to 24 hours</p>
 			</div>
-			<div className='flex flex-col gap-5 w-1/3 h-full border-[1px]'>
+			<div className='flex flex-col gap-5 w-full md:w-1/3 h-full border-[1px]'>
 				<div className={`flex items-center justify-center bg-[#AA998A] w-1/4 min-w-[100px] h-[100px] mx-auto`}>
 					<Image
 						width={60}

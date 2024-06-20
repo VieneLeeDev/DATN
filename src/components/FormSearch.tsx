@@ -19,27 +19,30 @@ const FormSearch = observer((props: any) => {
 	// };
 
 	return (
-		<div className="relative hidden container xl:flex xl:mx-auto h-[150px] w-full bg-white rounded-xl px-[50px] py-[34px] items-center border-b-[1px]">
-			<div className="flex flex-col w-1/4 ">
+		<div className="relative container md:flex md:mx-auto md:h-[150px] w-full bg-white rounded-xl py-[34px] items-center border-b-[1px]">
+			<div className="flex flex-col w-full md:w-1/4 ">
 				<span className="text-hoverbtn font-bold uppercase">Check-in:</span>
 				<DatePicker popupClassName={"absolute z-[2000]"} className="w-full my-2 h-[50px]" format={'DD MM YYYY'} />
 			</div>
 			<Separate />
-			<div className="flex flex-col w-1/4 ">
+			<div className="flex flex-col w-full md:w-1/4 ">
 				<span className="text-hoverbtn font-bold uppercase">Check-out:</span>
 				<DatePicker popupClassName={"absolute z-[2000]"} className="w-full my-2 h-[50px]" format={'DD MM YYYY'} />
 			</div>
 			<Separate />
-			<div className="flex flex-col w-1/4">
+			<div className="flex flex-col w-full md:w-1/4">
 				<span className="text-hoverbtn font-bold uppercase">Guests:</span>
-				<Select popupClassName={"absolute z-[2000]"}  style={{height:"50px"}} ></Select>
+				<Select popupClassName={"absolute z-[2000]"} style={{ height: "50px" }} ></Select>
 			</div>
 			<Separate />
-			<div className="relative h-full flex flex-col w-auto">
-				<Button className="absolute text-white bg-hoverbtn w-[150px] h-[50px] font-bold text-[24px] leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
+			<div className="relative hidden lg:flex h-full flex-col">
+				<Button className="absolute text-white max-w-[150px] xl:w-[150px] bg-hoverbtn h-[50px] font-bold text-[24px] leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
 					Search
 				</Button>
 			</div>
+				<Button className="block lg:hidden text-white bg-hoverbtn w-full  max-w-[150px] mx-auto h-[50px] font-bold text-[24px] mt-4 leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
+					Search
+				</Button>
 		</div>
 	);
 });

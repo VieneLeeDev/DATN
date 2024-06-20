@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
-import { Avatar, Button, Dropdown, Tooltip, notification } from "antd";
+import { Avatar, Button, Dropdown, Select, Tooltip, notification } from "antd";
 import { authStore } from "@/stores/auth.store";
 import { ProfileFilled, LogoutOutlined } from '@ant-design/icons';
 import { appStore } from "@/stores";
 import Image from "next/image";
 import dayjs from "dayjs";
+import './Header.css'
 export const Header = () => {
 	const [hours, setHours] = useState(dayjs().format("HH:mm A"))
 	const router = useRouter();
@@ -23,7 +24,7 @@ export const Header = () => {
 	}, [])
 
 
-	return (<section className="h-[62px] w-full bg-[#1C2C34] pt-[16px] pb-[15px] box-border">
+	return (<section className="h-[62px] w-full bg-[#1C2C34] pt-[16px] pb-[15px] px-5 box-border">
 		<section className="text-[15px] flex justify-between text-white w-full mx-auto max-w-[1650px]">
 			{/* logo */}
 			<section className="flex items-center gap-[8px] h-full ">
@@ -37,7 +38,7 @@ export const Header = () => {
 				<span>-</span>
 				<span>{hours}</span>
 			</section>
-			<section className="flex items-center gap-[8px] h-full text-[15px]">
+			<section className="hidden md:flex items-center gap-[8px] h-full text-[15px] box-border">
 				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
 					<Image
 						alt="tick SVG"
@@ -65,6 +66,17 @@ export const Header = () => {
 						src={'/language.svg'} ></Image>
 					<span>Languages</span>
 				</div>
+			</section>
+			<section className="block md:hidden lang-mobile">
+				<Select
+					dropdownStyle={ {width:150}}
+					className="outline-none border-none"
+					suffixIcon={<Image
+						alt="tick SVG"
+						width={30}
+						height={30}
+						src={'/language.svg'} ></Image>}>
+				</Select>
 			</section>
 		</section>
 	</section>);
