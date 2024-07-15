@@ -46,7 +46,7 @@ export default function SigninForm() {
 								<input id="rememberme" type="checkbox"></input>
 								<label htmlFor="rememberme" className="ml-[8px]">Remember me</label>
 							</div>
-							<Link href={"#"}>Forgot password?</Link>
+							<Link href={"#"} className="hover:text-hoverbtn">Forgot password?</Link>
 						</Space>
 						<Button className={`${styles["submit-btn"]} w-full h-[50px] mt-[20px] text-[13px] font-serif uppercase bg-[#1C2C34] text-white font-[600]`}>Login</Button>
 					</Form> 

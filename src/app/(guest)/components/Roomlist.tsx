@@ -1,9 +1,19 @@
 import Card from '@/components/Card'
+import { supabase } from '@/utils/supabaseClient'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Roomlist = () => {
-	const data = [1, 2, 3, 4, 5, 6, 7, 8]
+	const [data, setData] = useState<any[]>([])
+
+	const initPage = async () => {
+		const { data } = await supabase.from("room").select("*")
+		data && setData(data)
+	}
+	useEffect(() => {
+		initPage()
+	}, [])
+
 	return (
 		<div className='md:container w-full h-auto'>
 			<section className='w-full flex flex-col md:flex-row py-[30px] gap-5'>
@@ -17,7 +27,7 @@ const Roomlist = () => {
 				</section>
 			</section>
 			<section className='w-full py-[30px] lg:gap-5 grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3'>
-				{data.map((item) => <Card guest='1' img='https://demo.7iquid.com/carmelina/wp-content/uploads/2024/02/h1-ab3.webp' name='Example' price={1} size={`1`} description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat et erat vel sollicitudin. Aenean nec hendrerit turpis. Aliquam malesuada mauris magna. Aliquam vitae velit id sem volutpat malesuada. Fusce blandit magna sed odio posuere aliquet. Nullam a ultricies diam.' key={item} />)}
+				{data.map((item,index) => index <= 5 ?  <Card guest={item.guest} img={item.image_url} name={item.id} price={item.price} size={item.size} description={item.description} key={item} />: null)}
 			</section>
 		</div>
 	)
