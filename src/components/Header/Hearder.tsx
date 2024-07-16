@@ -51,7 +51,7 @@ export const Header = () => {
 					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
 				</div>
 				<div className="flex h-full w-auto gap-2">
-					<Link href={"./login"} className="block text-white hover:text-hoverbtn cursor-pointer">Login</Link >
+					<Link href={{pathname:"./login",query:{typeForm:"login"}}} className="block text-white hover:text-hoverbtn cursor-pointer">Login</Link >
 					<span className="block">/</span>
 					<span className="block text-white hover:text-hoverbtn cursor-pointer">Register</span>
 				</div>

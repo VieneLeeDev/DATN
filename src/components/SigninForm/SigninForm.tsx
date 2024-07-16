@@ -8,7 +8,6 @@ import { authStore } from "@/stores/auth.store";
 import { appStore } from "@/stores";
 import styles from "./SigninForm.module.css"
 export default function SigninForm() {
-
 	return (
 		<div className="flex justify-center items-center w-full h-full px-5">
 			<div className="w-full h-full max-w-[500px] max-h-[550px]">
@@ -52,7 +51,12 @@ export default function SigninForm() {
 					</Form> 
 					<Space className="flex mt-[50px]">
 						<span>You not registed?</span>
-						<Link className="text-hoverbtn underline-offset-1" href={"#"}>Create an account</Link>
+						<Link className="text-hoverbtn underline-offset-1" href={{
+							pathname:'login',
+							query:{
+								typeForm: "register"
+							}
+						}} >Create an account</Link>
 					</Space>
 				</div>
 			</div>
