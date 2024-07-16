@@ -11,6 +11,7 @@ import Roomlist from "./components/Roomlist";
 import ServiceCard from "./components/ServiceCard";
 const HomePage = inject("appStore")(
 	observer(({ appStore }: { appStore?: any }) => {
+		//test
 		return (
 			<div className="flex flex-col w-full">
 				<section className="relative bg-slate-200 w-full min-h-[877px]">
