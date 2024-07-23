@@ -57,6 +57,9 @@ export default function SigninForm() {
 								typeForm: "register"
 							}
 						}} >Create an account</Link>
+						<Link className="text-hoverbtn underline-offset-1 ml-5" href={{
+							pathname:'./',
+						}} >Home page</Link>
 					</Space>
 				</div>
 			</div>

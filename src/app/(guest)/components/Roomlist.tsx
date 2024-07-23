@@ -7,8 +7,10 @@ const Roomlist = () => {
 	const [data, setData] = useState<any[]>([])
 
 	const initPage = async () => {
+		let roomLists: any[] = []
 		const { data } = await supabase.from("room").select("*")
-		data && setData(data)
+		data && data.forEach((room: any, index: number) => index <= 5 && roomLists.push(room))
+		setData(roomLists)
 	}
 	useEffect(() => {
 		initPage()
@@ -27,7 +29,7 @@ const Roomlist = () => {
 				</section>
 			</section>
 			<section className='w-full py-[30px] lg:gap-5 grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3'>
-				{data.map((item,index) => index <= 5 ?  <Card guest={item.guest} img={item.image_url} name={item.id} price={item.price} size={item.size} description={item.description} key={item} />: null)}
+				{data.map((item, index) => index <= 5 ? <Card guest={item.guest} img={item.image_url} room_name={item.room_name} price={item.price} size={item.size} description={item.description} key={item} /> : null)}
 			</section>
 		</div>
 	)

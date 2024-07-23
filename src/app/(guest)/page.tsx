@@ -1,5 +1,5 @@
 "use client";
-import banner from "@/assets/banner.webp"
+ import banner from "@/assets/banner.webp"
 import Image from "next/image";
 import FormSearch from "@/components/FormSearch";
 import room_banner from '@/assets/h1-ab3.webp'
@@ -34,7 +34,7 @@ const HomePage = () => {
 					</div>
 					<div className="w-full lg:w-1/2 pl-[10px]">
 						<span className="block leading-[40px] text-[20px] font-cormorant">{`"Our mission as a premier new york hotel is to provide peace of mind, consistency and build loyalty based on the value of our relationships with guests. We strive to be unique and the place you want to come back, Aliquam porttitor sit amet diam non placerat"`}</span>
-						<span className="block mt-[20px] text-[#111111] font-bold">{`Hercules Le – `} <i>General Manager Hercules Hotel</i></span>
+						<span className="block mt-[20px] text-[#111111] font-bold">{`Hercules Le - `} <i>General Manager Hercules Hotel</i></span>
 					</div>
 				</section>
 			</div>
@@ -47,7 +47,7 @@ const HomePage = () => {
 			<div className="flex flex-col lg:flex-row w-full lg:h-[500px] bg-[#F1EFED] p-[30px]">
 				<div className="w-full lg:w-1/2 h-full py-[30px] px-[50px]">
 					<span className="block text-[40px] h-1/3 font-bold font-cormorant">How To Find Us?</span>
-					<span className="block text-[20px] font-[500]">Melbourne, New York City</span>
+					<span className="block text-[20px] font-[500]">Hai Chau, Da Nang City</span>
 					<span className="block my-[10px]">3949 State 38b Rte Newark Valley, New</span>
 					<span className="block my-[30px]"><strong>Email</strong>: levien26092k1@gmail.com</span>
 					<span className="block text-[20px] font-[500]">Call Us Reservation:</span>

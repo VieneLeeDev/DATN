@@ -3,7 +3,7 @@ import Image from "next/image";
 import Icons from './icon_room.svg'
 
 interface CartProps {
-	name: string;
+	room_name: string;
 	price: number;
 	description?: string;
 	img: string;
@@ -19,12 +19,12 @@ const Card = (props: CartProps) => {
 			</div>
 			<div className="w-full h-[250px] py-6 px-4">
 				<div className="border-b-[2px] border-solid my-[5px] gap-[10px]">
-					<span className="text-2xl font-bold text-[#312d2d]">{props.name}</span>
+					<span className="text-2xl font-bold text-[#312d2d]">{props.room_name}</span>
 					<span className="block text-lg font-bold text-[#757171] my-[5px]">{props.guest}</span>
 				</div>
 				<div className="flex justify-between border-b-[2px] border-solid my-[5px] gap-[10px] text-2xl font-bold text-[#312d2d]">
 					<span className="block">Price:</span>
-					<span className="block">${props.price}</span>
+					<span className="block uppercase text-lg">${props.price}/night</span>
 				</div>
 				<div className="overflow-hidden line-clamp-4">
 					<span>{props.description}</span>

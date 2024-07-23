@@ -66,6 +66,7 @@ export default function SignupForm() {
 					<Space className="flex mt-[50px]">
 						<span>Do you already have an account?</span>
 						<Link className="text-hoverbtn underline-offset-1" href={{pathname:"/login", query:{typeForm:"login"}}} >login</Link>
+						<Link className="text-hoverbtn underline-offset-1 ml-5" href={{pathname:'./',}} >Home page</Link>
 					</Space>
 				</div>
 			</div>

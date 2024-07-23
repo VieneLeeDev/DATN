@@ -3,7 +3,6 @@ import SigninForm from "@/components/SigninForm/SigninForm";
 import bg_img from "@/assets/login-bg1.jpg"
 import Image from "next/image";
 import SignupForm from "@/components/SignupForm/SignupForm";
-import { useEffect } from "react";
 import {  useSearchParams } from "next/navigation";
 const Login = () => {
 	const searchParams = useSearchParams()
@@ -12,11 +11,11 @@ const Login = () => {
 
 	return (
 		<div className="flex h-screen">
-			<div className="flex justify-center align-center w-full lg:w-1/2 h-full">
+			<div className="flex flex-col justify-center align-center w-full lg:w-1/2 h-full">
 				{typeForm === "login" ? <SigninForm /> : <SignupForm/>}
 			</div>
 			<div className="hidden relative lg:block lg:w-1/2">
-				<Image src={bg_img} alt="Background login" className="object-cover object-center h-full" />
+				<Image src={bg_img} alt="Background login" className="absolute object-cover object-center h-full" />
 				<div className="absolute w-full h-full top-0 left-0 flex flex-col justify-center items-center">
 					<div className="flex flex-col justify-center w-full h-auto px-[60px]">
 						<h2 className="text-white text-[46px] font-cormorant">What do you get as a member?</h2>
