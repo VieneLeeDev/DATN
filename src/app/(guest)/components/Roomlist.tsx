@@ -25,7 +25,7 @@ const Roomlist = () => {
 				</section>
 				<section className='w-full md:w-1/2'>
 					<p className='leading-8 text-[16px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum feugiat et erat vel sollicitudin. Aenean nec hendrerit turpis. Aliquam malesuada mauris magna. Aliquam vitae velit id sem volutpat malesuada. Fusce blandit magna sed odio posuere aliquet. Nullam a ultricies diam.</p>
-					<Link className={`inline-block relative hover:text-hoverbtn float-right before:content-[''] before:absolute before:bottom-0 before:w-full before:h-[1px] before:bg-current before:transition-transform before:duration-300 hover:before:scale-x-0 hover:before:origin-center `} href={'#'}>View All Rooms</Link>
+					<Link className={`inline-block relative hover:text-hoverbtn float-right before:content-[''] before:absolute before:bottom-0 before:w-full before:h-[1px] before:bg-current before:transition-transform before:duration-300 hover:before:scale-x-0 hover:before:origin-center `} href={'./list-room'}>View All Rooms</Link>
 				</section>
 			</section>
 			<section className='w-full py-[30px] lg:gap-5 grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3'>
