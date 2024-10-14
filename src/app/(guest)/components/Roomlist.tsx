@@ -1,8 +1,7 @@
-import Card from '@/components/Card'
+import Card from '@/components/Card/Card'
 import { supabase } from '@/utils/supabaseClient'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-
 const Roomlist = () => {
 	const [data, setData] = useState<any[]>([])
 
@@ -28,8 +27,8 @@ const Roomlist = () => {
 					<Link className={`inline-block relative hover:text-hoverbtn float-right before:content-[''] before:absolute before:bottom-0 before:w-full before:h-[1px] before:bg-current before:transition-transform before:duration-300 hover:before:scale-x-0 hover:before:origin-center `} href={'./list-room'}>View All Rooms</Link>
 				</section>
 			</section>
-			<section className='w-full py-[30px] lg:gap-5 grid sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-3'>
-				{data.map((item, index) => index <= 5 ? <Card guest={item.guest} img={item.image_url} room_name={item.room_name} price={item.price} size={item.size} description={item.description} key={item} /> : null)}
+			<section className='w-full py-[30px]'>
+				<Card/>
 			</section>
 		</div>
 	)
