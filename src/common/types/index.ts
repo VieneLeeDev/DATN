@@ -107,3 +107,13 @@ export interface Database {
 		}
 	}
 }
+
+export interface RoomDto{
+	imgUrl?: string,
+	slogan?: string,
+	description?: string,
+	size?: number,
+	bedType?: string,
+	capacity?: string,
+	bathRoom?:string,
+}
