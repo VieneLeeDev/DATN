@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
-import { useRouter } from "next/navigation";
 import { supabase } from "@/utils/supabaseClient";
 import { Avatar, Button, Dropdown, Select, Tooltip, notification } from "antd";
 import { authStore } from "@/stores/auth.store";
@@ -10,15 +9,14 @@ import { ProfileFilled, LogoutOutlined } from '@ant-design/icons';
 import { appStore } from "@/stores";
 import Image from "next/image";
 import dayjs from "dayjs";
+import night_icon from '@/assets/night_moon.svg?url'
 import './Header.css'
 export const Header = () => {
-	const [hours, setHours] = useState(dayjs().format("HH:mm A"))
-	const router = useRouter();
-
-
+	const [hours, setHours] = useState<string>(dayjs().format())
+	const link_icon = dayjs(hours).hour() > 18 ? night_icon : '/02d.svg'
 	useEffect(() => {
 		const intervalFunc = setInterval(() => {
-			setHours(dayjs().format("HH:mm A"))
+			setHours(dayjs().format())
 		}, 1000)
 		return () => clearInterval(intervalFunc)
 	}, [])
@@ -34,9 +32,8 @@ export const Header = () => {
 					width={30}
 					height={30}
 					priority
-					src={'/02d.svg'} ></Image>
-				<span>-</span>
-				<span>{hours}</span>
+					src={link_icon} />
+				<span className="tracking-widest">{`- ${dayjs(hours).format("HH:mm A")}`}</span>
 			</section>
 			<section className="hidden md:flex items-center gap-[8px] h-full text-[15px] box-border">
 				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
@@ -51,9 +48,9 @@ export const Header = () => {
 					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
 				</div>
 				<div className="flex h-full w-auto gap-2">
-					<Link href={{pathname:"./login",query:{typeForm:"login"}}} className="block text-white hover:text-hoverbtn cursor-pointer">Login</Link >
+					<Link href={{ pathname: "./login", query: { typeForm: "login" } }} className="block text-white hover:text-hoverbtn cursor-pointer">Login</Link >
 					<span className="block">/</span>
-					<Link href={{pathname:"./login",query:{typeForm:"register"}}} className="block text-white hover:text-hoverbtn cursor-pointer">Register</Link >
+					<Link href={{ pathname: "./login", query: { typeForm: "register" } }} className="block text-white hover:text-hoverbtn cursor-pointer">Register</Link >
 				</div>
 				<div className="px-[25px]">
 					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
@@ -69,7 +66,7 @@ export const Header = () => {
 			</section>
 			<section className="block md:hidden lang-mobile">
 				<Select
-					dropdownStyle={ {width:150}}
+					dropdownStyle={{ width: 150 }}
 					className="outline-none border-none"
 					suffixIcon={<Image
 						alt="tick SVG"
