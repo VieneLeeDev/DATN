@@ -13,7 +13,7 @@ import night_icon from '@/assets/night_moon.svg?url'
 import './Header.css'
 export const Header = () => {
 	const [hours, setHours] = useState<string>(dayjs().format())
-	const link_icon = dayjs(hours).hour() > 18 ? night_icon : '/02d.svg'
+	const link_icon = dayjs(hours).hour() > 18 ? '/01d.svg' : '/02d.svg'
 	useEffect(() => {
 		const intervalFunc = setInterval(() => {
 			setHours(dayjs().format())
