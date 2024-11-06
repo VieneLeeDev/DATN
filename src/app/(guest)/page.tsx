@@ -4,7 +4,7 @@ import Image from "next/image";
 import FormSearch from "@/components/FormSearch";
 import room_banner from '@/assets/h1-ab3.webp'
 import AddressMap from "@/components/AddressMap";
-import Roomlist from "./components/Roomlist";
+import Roomlist from "./components/RoomList/Roomlist";
 import ServiceCard from "./components/ServiceCard";
 const HomePage = () => {
 	return (

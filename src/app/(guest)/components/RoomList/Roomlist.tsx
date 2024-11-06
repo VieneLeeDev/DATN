@@ -2,13 +2,17 @@ import Card from '@/components/Card/Card'
 import { supabase } from '@/utils/supabaseClient'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 const Roomlist = () => {
 	const [data, setData] = useState<any[]>([])
 
 	const initPage = async () => {
 		let roomLists: any[] = []
 		const { data } = await supabase.from("room").select("*")
-		data && data.forEach((room: any, index: number) => index <= 5 && roomLists.push(room))
+		data?.forEach((room: any, index: number) => index <= 5 && roomLists.push(room))
 		setData(roomLists)
 	}
 	useEffect(() => {
@@ -16,7 +20,7 @@ const Roomlist = () => {
 	}, [])
 
 	return (
-		<div className='md:container w-full h-auto'>
+		<div className={`md:container w-full h-auto`}>
 			<section className='w-full flex flex-col md:flex-row py-[30px] gap-5'>
 				<section className='w-full md:w-1/2'>
 					<span className='block uppercase text-hoverbtn text-[16px]'>our rooms</span>
@@ -28,7 +32,23 @@ const Roomlist = () => {
 				</section>
 			</section>
 			<section className='w-full py-[30px]'>
-				<Card/>
+				<Swiper
+					autoplay={{
+						delay: 5000,
+						disableOnInteraction: false,
+					}}
+					pagination={{
+						clickable: true,
+					}}
+					scrollbar={{ draggable: true }}
+					navigation={true}
+					modules={[Autoplay, Pagination, Navigation,]}
+				>
+					<SwiperSlide><Card /></SwiperSlide>
+					<SwiperSlide><Card /></SwiperSlide>
+					<SwiperSlide><Card /></SwiperSlide>
+					<SwiperSlide><Card /></SwiperSlide>
+				</Swiper>
 			</section>
 		</div>
 	)

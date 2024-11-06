@@ -14,6 +14,7 @@ import './Header.css'
 export const Header = () => {
 	const [hours, setHours] = useState<string>(dayjs().format())
 	const link_icon = dayjs(hours).hour() > 18 ? '/01d.svg' : '/02d.svg'
+
 	useEffect(() => {
 		const intervalFunc = setInterval(() => {
 			setHours(dayjs().format())
@@ -35,15 +36,10 @@ export const Header = () => {
 					src={link_icon} />
 				<span className="tracking-widest">{`- ${dayjs(hours).format("HH:mm A")}`}</span>
 			</section>
+			<div className="flex h-full w-auto text-white hover:text-hoverbtn cursor-pointer text-[20xp]">
+				<Link href={"./"}>HERCULES HOTEL & RESORT</Link>
+			</div>
 			<section className="hidden md:flex items-center gap-[8px] h-full text-[15px] box-border">
-				<div className="flex h-full w-auto gap-2 text-white hover:text-hoverbtn cursor-pointer">
-					<Image
-						alt="tick SVG"
-						width={25}
-						height={25}
-						src={'/tick.svg'} ></Image>
-					<span>Terms & Condition</span>
-				</div>
 				<div className="px-[25px]">
 					<div className="h-[25px] border-l-[1px] border-solid border-[#FFFFFF26]"></div>
 				</div>
