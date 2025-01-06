@@ -15,8 +15,8 @@ export default function SignupForm() {
 			try {
 				setLoading(true)
 				await supabaseClient.auth.signUp({
-					email:values.email,
-					password:values.password
+					email: values.email,
+					password: values.password
 				})
 			} catch (error) {
 				console.log(error)
