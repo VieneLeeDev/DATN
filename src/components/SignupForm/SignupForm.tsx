@@ -4,6 +4,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import styles from "./SignupForm.module.css"
 import { useForm } from "antd/es/form/Form";
+import { supabaseClient } from "@/utils/supabase/client";
 export default function SignupForm() {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [form] = useForm()
@@ -13,12 +14,15 @@ export default function SignupForm() {
 		if (isValid) {
 			try {
 				setLoading(true)
-				console.log(values)
+				await supabaseClient.auth.signUp({
+					email:values.email,
+					password:values.password
+				})
 			} catch (error) {
 				console.log(error)
 			}
 			finally {
-				setTimeout(() => setLoading(false), 2000)
+				setLoading(false)
 			}
 		}
 	}

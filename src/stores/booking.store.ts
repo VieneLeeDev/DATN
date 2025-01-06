@@ -2,7 +2,6 @@ import { appStore } from "@/stores";
 import { destroy, getParent, types, flow, getRoot } from "mobx-state-tree";
 import { toJS, values } from "mobx";
 import { v4 as uuidv4 } from "uuid";
-import { supabase } from "@/utils/supabaseClient";
 import { notification } from "antd";
 
 const Booking = types
@@ -54,13 +53,6 @@ export const BookingStore = types
 			}) {
 				try {
 					const id = uuidv4();
-					yield supabase.from("booking").insert({
-						id,
-						from: items.from,
-						to: items.to,
-						room_id: items.room_id,
-						total_price: items.total_price,
-					});
 					yield self.fetchData();
 						notification.success({ message: "Booking thành công!" });
 				} catch (error) {
@@ -69,14 +61,12 @@ export const BookingStore = types
 			}),
 			fetchData: flow(function* () {
 				try {
-					const { data } = yield supabase.from("booking").select("*");
-					self.items = data;
+					
 				} catch (error) {
 					console.log(error);
 				}
 			}),
 			delete: flow(function* (item: any) {
-				yield supabase.from("booking").delete().eq("id", item.id);
 				destroy(item);
 			}),
 		};

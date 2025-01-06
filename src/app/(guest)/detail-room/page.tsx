@@ -10,7 +10,6 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { inject, observer } from "mobx-react";
 import Image from "next/image";
 import { useExplorePathname } from "@/hooks";
-import { supabase } from "@/utils/supabaseClient";
 import { RoomStore } from "@/stores/room.store";
 import { toJS } from "mobx";
 import Router, { withRouter } from 'next/router'

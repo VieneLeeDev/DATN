@@ -7,15 +7,15 @@ import AddressMap from "@/components/AddressMap";
 import Roomlist from "./components/RoomList/Roomlist";
 import ServiceCard from "./components/ServiceCard";
 import { useEffect, useState } from "react";
-import { supabaseTest } from "@/utils/supabase/supabase";
+// import { supabaseTest } from "@/utils/supabase/supabase";
 const HomePage = () => {
-	const init = async () => {
-		const { data, error } = await supabaseTest.from("test").select("*")
-		console.log({ data, error }, 'googlaps.markers')
-	}
+	// const init = async () => {
+	// 	const { data, error } = await supabaseTest.from("test").select("*")
+	// 	console.log({ data, error }, 'googlaps.markers')
+	// }
 	useEffect(() => {
 		if (typeof window !== "undefined") {
-			init()
+			// init()
 		}
 	  }, []);
 	  

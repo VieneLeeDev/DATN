@@ -3,7 +3,6 @@ import { Button, Form, Spin, Upload, message } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';
-import { supabase } from '@/utils/supabaseClient';
 import UpdateProfile from './components/update';
 
 const props: UploadProps = {
@@ -29,8 +28,7 @@ const Profile = () => {
 	const [openUpdate, setOpenUpdate] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const initPage = async () => {
-		const { data, error } = await supabase.from('profiles').select()
-		data && setInfoUser(data[0])
+
 	}
 	useEffect(() => { initPage() }, [])
 	const handleOpen = async () => {

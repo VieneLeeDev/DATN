@@ -26,15 +26,15 @@ const AccountPage = () => {
 	const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(defaultCheckedList);
 	const [isLoading, setIsLoading] = useState(true)
 	const fetchApi = async () => {
-		const { data: members } = await readMembers()
-		if (members) {
-			const data = members.map((account, index) => account = { key: index, ...account })
-			const numberAdmin = members.filter((account) => account.role === 'admin')
-			const numberUser = members.filter((account) => account.role === 'user')
-			setDataSource(data)
-			setDataTable(data)
-			setCounterRole({ admin: numberAdmin.length, user: numberUser.length })
-		}
+		// const { data: members } = await readMembers()
+		// if (members) {
+		// 	const data = members.map((account, index) => account = { key: index, ...account })
+		// 	const numberAdmin = members.filter((account) => account.role === 'admin')
+		// 	const numberUser = members.filter((account) => account.role === 'user')
+		// 	setDataSource(data)
+		// 	setDataTable(data)
+		// 	setCounterRole({ admin: numberAdmin.length, user: numberUser.length })
+		// }
 		setIsLoading(false)
 	}
 

@@ -11,7 +11,7 @@ const nextConfig = {
 		domains: ['images.unsplash.com'],
 		disableStaticImages: true
 	},
-	experimental: { serverActions: true }
+	experimental: { serverActions: true },
 }
 module.exports = nextConfig
 module.exports = withSvgr();

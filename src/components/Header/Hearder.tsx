@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiAlignJustify } from "react-icons/fi";
-import { supabase } from "@/utils/supabaseClient";
 import { Avatar, Button, Dropdown, Select, Tooltip, notification } from "antd";
 import { authStore } from "@/stores/auth.store";
 import { ProfileFilled, LogoutOutlined } from '@ant-design/icons';

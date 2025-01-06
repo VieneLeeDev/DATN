@@ -1,5 +1,4 @@
 import Card from '@/components/Card/Card'
-import { supabase } from '@/utils/supabaseClient'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,15 +8,6 @@ import 'swiper/css/pagination';
 const Roomlist = () => {
 	const [data, setData] = useState<any[]>([])
 
-	const initPage = async () => {
-		let roomLists: any[] = []
-		const { data } = await supabase.from("room").select("*")
-		data?.forEach((room: any, index: number) => index <= 5 && roomLists.push(room))
-		setData(roomLists)
-	}
-	useEffect(() => {
-		initPage()
-	}, [])
 
 	return (
 		<div className={`md:container w-full h-auto`}>

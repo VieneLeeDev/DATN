@@ -1,5 +1,4 @@
 "use client";
-import { supabase } from "@/utils/supabaseClient";
 import { Form, Input, notification } from "antd";
 import React, { useState } from "react";
 

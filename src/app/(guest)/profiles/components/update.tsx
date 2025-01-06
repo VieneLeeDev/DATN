@@ -1,4 +1,3 @@
-import { supabase } from '@/utils/supabaseClient'
 import { Button, Form, Input, Modal, Spin, notification } from 'antd'
 import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs';
@@ -8,10 +7,7 @@ const UpdateProfile = (props: any) => {
 	const [isLoading, setIsLoading] = useState(false)
 
 	const initform = async () => {
-		const { data: activeSession } = await supabase.auth.getSession();
-		if (activeSession.session) {
-			setUserId(activeSession.session.user.id)
-		}
+		
 	}
 
 	useEffect(() => {
@@ -21,13 +17,6 @@ const UpdateProfile = (props: any) => {
 	const { data } = props
 	const onFinish = async (value: any) => {
 		setIsLoading(true)
-		const { data, error } = await supabase.from('profiles').update(value).eq('id', userId)
-		if (error?.message) {
-			notification.error({ message: error.message })
-		}
-		else {
-			notification.success({ message: "Update Successful!" })
-		}
 		props.close()
 		setIsLoading(false)
 	}

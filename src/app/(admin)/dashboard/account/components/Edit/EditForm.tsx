@@ -14,12 +14,12 @@ const EditForm = (props: any) => {
 	const handleSubmitEditUser = async (values: any) => {
 		setIsLoading(true)
 		const resultUpdate = await updateMemberById(data.member.id, values)
-		if (resultUpdate.error?.mesage) {
-			notification.error({ message: resultUpdate.error?.mesage })
-		}
-		else {
-			notification.success({ message: resultUpdate.data?.mesage })
-		}
+		// if (resultUpdate.error?.mesage) {
+		// 	notification.error({ message: resultUpdate.error?.mesage })
+		// }
+		// else {
+		// 	notification.success({ message: resultUpdate.data?.mesage })
+		// }
 		await onCancel(); 
 		form.resetFields()
 		setIsLoading(false)

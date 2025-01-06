@@ -15,15 +15,15 @@ const CreateForm = (props: any) => {
 		setIsLoading(true)
 		startTransition(async () => {
 			const result = await createMember(datauser)
-			if (result) {
-				const { error } = JSON.parse(result)
-				if (error?.message) {
-					notification.error({ message: error?.message })
-				}
-				else {
-					notification.success({ message: "succesfull" })
-				}
-			}
+			// if (result) {
+			// 	const { error } = JSON.parse(result)
+			// 	if (error?.message) {
+			// 		notification.error({ message: error?.message })
+			// 	}
+			// 	else {
+			// 		notification.success({ message: "succesfull" })
+			// 	}
+			// }
 			await reloadFunction()
 			setIsLoading(false)
 			form.resetFields()

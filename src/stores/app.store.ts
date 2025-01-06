@@ -3,7 +3,6 @@ import { RoomStore } from "@/stores/room.store";
 import { BookingStore } from "@/stores/booking.store";
 import { toJS } from "mobx";
 import { AuthStore } from "./auth.store";
-import { supabase } from "@/utils/supabaseClient";
 import { PaymentStore } from "./payment.store";
 
 const FilterStore = types.model("FilterStore", {
@@ -36,13 +35,11 @@ const AppStore = types
 						let dataRoom, dataBooking;
 
 						const getDataBooking = flow(function* () {
-							const { data } = yield supabase.from("booking").select();
-							return data;
+						
 						});
 
 						const getDataRoom = flow(function* () {
-							const { data } = yield supabase.from("room").select();
-							return data;
+						
 						});
 
 					

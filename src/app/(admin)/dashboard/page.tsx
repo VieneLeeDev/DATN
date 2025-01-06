@@ -37,10 +37,6 @@ const HomeDashboard = () => {
 
 	const resultReadRoom = async () => {
 		setIsloading(true)
-		const { data, error } = await readRoom()
-		const cleanData = data?.map((room) => { return { ...room, key: room.id } })
-		cleanData && setDataSource(cleanData)
-		cleanData && setDataList(cleanData)
 		setIsloading(false)
 	}
 
@@ -65,13 +61,6 @@ const HomeDashboard = () => {
 
 	const handleDeleteRoom = async (id: string) => {
 		setIsloading(true)
-		const resultDelete = await deleteRoom(id)
-		if (resultDelete.error?.message) {
-			notification.error({ message: resultDelete.error?.message })
-		}
-		else {
-			notification.success({ message: "Created succesfull!" })
-		}
 		await resultReadRoom()
 	}
 

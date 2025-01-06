@@ -24,13 +24,13 @@ const DrawerRoom = (props: any) => {
 
 	const handleAddRoom = async (value: any) => {
 		setIsLoading(true)
-		const result = await createRoom(value)
-		if (result.error?.message) {
-			notification.error({ message: result.error?.message })
-		}
-		else {
-			notification.success({ message: "Created succesfull!" })
-		}
+		// const result = await createRoom(value)
+		// if (result.error?.message) {
+		// 	notification.error({ message: result.error?.message })
+		// }
+		// else {
+		// 	notification.success({ message: "Created succesfull!" })
+		// }
 		setIsLoading(false)
 		form.resetFields()
 		onClose()
@@ -38,13 +38,13 @@ const DrawerRoom = (props: any) => {
 
 	const handleUpdateRoom = async (value: any) => {
 		setIsLoading(true)
-		const resultUpdateRoom = await updateRoom(value)
-		if (resultUpdateRoom?.error?.message) {
-			notification.error({ message: 'This Room Id is already exist!' })
-		}
-		else {
-			notification.success({ message: 'Update Successful!' })
-		}
+		// const resultUpdateRoom = await updateRoom(value)
+		// if (resultUpdateRoom?.error?.message) {
+		// 	notification.error({ message: 'This Room Id is already exist!' })
+		// }
+		// else {
+		// 	notification.success({ message: 'Update Successful!' })
+		// }
 		setIsLoading(false)
 		form.resetFields()
 		onClose()
