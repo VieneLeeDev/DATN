@@ -1,12 +1,24 @@
 "use client";
- import banner from "@/assets/banner.webp"
+import banner from "@/assets/banner.webp"
 import Image from "next/image";
 import FormSearch from "@/components/FormSearch";
 import room_banner from '@/assets/h1-ab3.webp'
 import AddressMap from "@/components/AddressMap";
 import Roomlist from "./components/RoomList/Roomlist";
 import ServiceCard from "./components/ServiceCard";
+import { useEffect, useState } from "react";
+import { supabaseTest } from "@/utils/supabase/supabase";
 const HomePage = () => {
+	const init = async () => {
+		const { data, error } = await supabaseTest.from("test").select("*")
+		console.log({ data, error }, 'googlaps.markers')
+	}
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			init()
+		}
+	  }, []);
+	  
 	return (
 		<div className="flex flex-col w-full">
 			<section className="relative bg-slate-200 w-full min-h-[877px]">
@@ -19,7 +31,7 @@ const HomePage = () => {
 					<span className="text-center font-[400] text-[20px] text-[#CAB7A7] md:font-[400] md:text-[24px] uppercase tracking-widest underline leading-6">Hercules Luxury Hotel & Resort</span>
 					<p className="text-white my-[30px] text-[20px] font-[400] text-center md:line-clamp-2 max-w-[1240px] h-auto">When you get into a hotel room, you lock the door, and you know there is a secrecy, there is a luxury, there is fantasy. There is comfort. There is reassurance.</p>
 				</div>
-				<div className="absolute z-[1200] bottom-[-75px] w-full">
+				<div className="absolute z-[1200] bottom-[-75px] w-full px-[30px]">
 					<FormSearch />
 				</div>
 			</section>
@@ -60,7 +72,7 @@ const HomePage = () => {
 		</div>
 	);
 }
-		
+
 export default function Page() {
 	return <HomePage />;
 }

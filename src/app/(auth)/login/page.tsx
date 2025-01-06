@@ -10,7 +10,7 @@ const Login = () => {
 	const typeForm = searchParams.get('typeForm')
 
 	return (
-		<div className="flex h-screen">
+		<div className="flex h-screen box-border">
 			<div className="flex flex-col justify-center align-center w-full lg:w-1/2 h-full">
 				{typeForm === "login" ? <SigninForm /> : <SignupForm/>}
 			</div>

@@ -24,12 +24,12 @@ export default function SignupForm() {
 	}
 	return (
 		<Spin spinning={loading}>
-			<div className="flex justify-center items-center w-full h-full px-5">
+			<div className="flex justify-center items-center w-full max-h-full h-full p-5">
 				<div className="w-full h-full max-w-[500px] max-h-[550px]">
 					<span className="block text-[45px] mb-[15px] font-cormorant font-[500]">Register</span>
 					<span className="block mb-[30px] text-[#777777] text-[18px]">Register for a hotel account to enjoy exclusive privileges</span>
-					<div className="w-full h-auto">
-						<Form form={form} onFinish={handleSubmit} layout="vertical" className={`${styles.Loginform} w-full h-full`}>
+					<div className="w-full h-fit">
+						<Form form={form} onFinish={handleSubmit} layout="vertical" className={`${styles.Loginform} w-full`}>
 							<Form.Item
 								labelCol={{ span: 5 }}
 							>	<span className={styles["style-label"]}>User Name</span>
@@ -65,7 +65,6 @@ export default function SignupForm() {
 								</Form.Item>
 							</Form.Item>
 							<Form.Item
-
 								labelCol={{ span: 5 }}
 								rules={[
 									{
@@ -95,9 +94,9 @@ export default function SignupForm() {
 									<Input.Password className="h-[50px]" />
 								</Form.Item>
 							</Form.Item>
-							<Button onClick={form.submit} className={`${styles["submit-btn"]} w-full h-[50px] mt-[20px] text-[13px] font-serif uppercase bg-[#1C2C34] text-white font-[600]`}>Register Account</Button>
+							<Button onClick={form.submit} className={`${styles["submit-btn"]} w-full h-[50px] mt-[10px] text-[13px] font-serif uppercase bg-[#1C2C34] text-white font-[600]`}>Register Account</Button>
 						</Form>
-						<Space className="flex mt-[50px]">
+						<Space className="flex mt-[20px]">
 							<span>Do you already have an account?</span>
 							<Link className="text-hoverbtn underline-offset-1" href={{ pathname: "/login", query: { typeForm: "login" } }} >login</Link>
 							<Link className="text-hoverbtn underline-offset-1 ml-5" href={{ pathname: './', }} >Home page</Link>

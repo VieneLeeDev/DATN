@@ -54,7 +54,12 @@ const FormSearch = observer((props: any) => {
 				<Select options={optionsGuest} popupClassName={"absolute z-[2000]"} style={{ height: "50px" }} ></Select>
 			</div>
 			<Separate />
-			<div className="relative hidden lg:flex h-full flex-col">
+			<div className="relative hidden md:flex h-full flex-col md:w-1/4 lg:w-fit">
+				<Button onClick={handleSearch} className="absolute text-white max-w-[150px] xl:w-[150px] bg-hoverbtn h-[50px] font-bold text-[24px] leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
+					Search
+				</Button>
+			</div>
+			<div className="absolute left-[40%] bottom-[-25px] flex md:hidden h-full flex-col">
 				<Button onClick={handleSearch} className="absolute text-white max-w-[150px] xl:w-[150px] bg-hoverbtn h-[50px] font-bold text-[24px] leading-6 bottom-0 hover:!border-hoverbtn hover:!text-hoverbtn">
 					Search
 				</Button>

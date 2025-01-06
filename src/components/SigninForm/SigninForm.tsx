@@ -9,7 +9,7 @@ import { appStore } from "@/stores";
 import styles from "./SigninForm.module.css"
 export default function SigninForm() {
 	return (
-		<div className="flex justify-center items-center w-full h-full px-5">
+		<div className="flex justify-center items-center w-full h-full px-5 max-h-full">
 			<div className="w-full h-full max-w-[500px] max-h-[550px]">
 				<span className="block text-[45px] mb-[15px] font-cormorant font-[500]">Login</span>
 				<span className="block mb-[30px] text-[#777777] text-[18px]">Sign in to your account!</span>

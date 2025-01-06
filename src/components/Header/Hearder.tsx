@@ -36,7 +36,7 @@ export const Header = () => {
 					src={link_icon} />
 				<span className="tracking-widest">{`- ${dayjs(hours).format("HH:mm A")}`}</span>
 			</section>
-			<div className="flex h-full w-auto text-white hover:text-hoverbtn cursor-pointer text-[20xp]">
+			<div className="h-full w-auto text-white hover:text-hoverbtn cursor-pointer text-[20xp] hidden lg:flex">
 				<Link href={"./"}>HERCULES HOTEL & RESORT</Link>
 			</div>
 			<section className="hidden md:flex items-center gap-[8px] h-full text-[15px] box-border">
