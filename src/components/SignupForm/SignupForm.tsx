@@ -8,22 +8,24 @@ import { supabaseClient } from "@/utils/supabase/client";
 export default function SignupForm() {
 	const [loading, setLoading] = useState<boolean>(false)
 	const [form] = useForm()
-	const handleSubmit = async () => {
-		const values = form.getFieldsValue();
-		const isValid = await form.validateFields()
-		if (isValid) {
+	const handleSubmit = async (values: any) => {
 			try {
 				setLoading(true)
 				await supabaseClient.auth.signUp({
-					email: values.email,
-					password: values.password
+					email: values?.email,
+					password: values?.password,
+					options:{
+						data:{
+							user_name: values?.user_name,
+							gender: values?.gender
+						}
+					}
 				})
 			} catch (error) {
 				console.log(error)
 			}
 			finally {
 				setLoading(false)
-			}
 		}
 	}
 	return (
@@ -43,6 +45,13 @@ export default function SignupForm() {
 										message: "User name can not be empty!"
 									}
 								]}>
+									<Input className="h-[50px]" />
+								</Form.Item>
+							</Form.Item>
+							<Form.Item
+								labelCol={{ span: 5 }}
+							>	<span className={styles["style-label"]}>Gender</span>
+								<Form.Item name={"gender"} >
 									<Input className="h-[50px]" />
 								</Form.Item>
 							</Form.Item>
