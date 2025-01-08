@@ -2,3 +2,15 @@
 	background-color: #1C2C34 !important;
 	border: 1px solid #AA998A !important;
 }
+.btn-menu{
+	color: white !important;
+}
+
+.btn-menu:hover{
+	color:#aa998a !important;
+	background-color: transparent !important;
+	border-color:#aa998a !important
+}
+.ant-dropdown{
+	z-index: 999999;
+}

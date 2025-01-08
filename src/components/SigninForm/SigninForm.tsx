@@ -9,14 +9,18 @@ import styles from "./SigninForm.module.css"
 import { supabaseClient } from "@/utils/supabase/client";
 export default function SigninForm() {
 	const [form] = Form.useForm()
+	const router = useRouter()
 	const handleLogin = async (values: any) => {
 		try {
-			const { data, error } = await supabaseClient.auth.signInWithPassword({
+			const { error } = await supabaseClient.auth.signInWithPassword({
 				email: values?.email,
 				password: values?.password,
 			  })
 			if (error) {
 				notification.error({ message: error?.message })
+			}
+			else{
+				router.push('/')
 			}
 		} catch (error) {
 			console.log(error)
