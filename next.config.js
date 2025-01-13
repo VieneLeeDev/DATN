@@ -6,9 +6,18 @@ const withSvgr = require('next-plugin-svgr');
 const nextConfig = {
 	pageExtensions: ['ts', 'tsx', 'mdx'],
 	output: 'standalone',
-	trailingSlash: true, 
+	trailingSlash: true,
 	images: {
-		domains: ['images.unsplash.com'],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'plus.unsplash.com',
+				port: '',
+				pathname: '',
+				search: '',
+			},
+		],
+		domains: ['images.unsplash.com', 'plus.unsplash.com'],
 		disableStaticImages: true
 	},
 	experimental: { serverActions: true },

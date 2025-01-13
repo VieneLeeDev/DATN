@@ -5,8 +5,52 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import img_room from '@/assets/roomhotel.jpg'
+const fakeData = [
+	{
+		room_name: 'Deluxe Suite',
+		price: 120,
+		description: 'A luxurious suite with a beautiful sea view.',
+		img: img_room,
+		guest: 2,
+		size: 45,
+		bedNo: 3
+	}, {
+		room_name: 'Deluxe Suite',
+		price: 120,
+		description: 'A luxurious suite with a beautiful sea view.',
+		img: img_room,
+		guest: 2,
+		size: 45,
+		bedNo: 3
+	}, {
+		room_name: 'Deluxe Suite',
+		price: 120,
+		description: 'A luxurious suite with a beautiful sea view.',
+		img: img_room,
+		guest: 2,
+		size: 45,
+		bedNo: 3
+	}, {
+		room_name: 'Deluxe Suite',
+		price: 120,
+		description: 'A luxurious suite with a beautiful sea view.',
+		img: img_room,
+		guest: 2,
+		size: 45,
+		bedNo: 3
+	}, {
+		room_name: 'Deluxe Suite',
+		price: 120,
+		description: 'A luxurious suite with a beautiful sea view.',
+		img: img_room,
+		guest: 2,
+		size: 45,
+		bedNo: 3
+	}
+]
 const Roomlist = () => {
-	const [data, setData] = useState<any[]>([])
+	const [data, setData] = useState<any[]>(fakeData)
 
 
 	return (
@@ -34,10 +78,8 @@ const Roomlist = () => {
 					navigation={true}
 					modules={[Autoplay, Pagination, Navigation,]}
 				>
-					<SwiperSlide><Card /></SwiperSlide>
-					<SwiperSlide><Card /></SwiperSlide>
-					<SwiperSlide><Card /></SwiperSlide>
-					<SwiperSlide><Card /></SwiperSlide>
+					{fakeData.map((room, index) => { return <SwiperSlide key={index}><Card bedNo={2} guest={room?.guest} staticURL={room?.img} price={room?.price} /></SwiperSlide> })}
+
 				</Swiper>
 			</section>
 		</div>
