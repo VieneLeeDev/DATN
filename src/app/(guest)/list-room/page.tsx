@@ -40,7 +40,7 @@ const ListRoom = () => {
 				</section>
 				<div className='mt-[100px] w-full h-fit flex flex-col gap-[30px] container mb-[30px]'>
 					{listRooms?.map((room) => {
-						return <div key={room?.id} className='w-full rounded-[10px] overflow-hidden h-[450px]'>
+						return <div key={room?.id} className='w-full rounded-[10px] overflow-hidden h-[450px] shadow-default'>
 							<Card bedNo={room?.bed_number} description={room?.description} img={room?.img} guest={room?.guest} price={room?.price} room_name={room?.room_name} size={room?.size} />
 						</div>
 					})}

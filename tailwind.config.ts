@@ -25,6 +25,9 @@ const config = {
 				hoverbtn: "#AA998A",
 				main_bg: "#1C2C34"
 			},
+			boxShadow: {
+				'default': '0px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+			},
 		},
 	},
 	plugins: [require("tailwindcss-animate")],
